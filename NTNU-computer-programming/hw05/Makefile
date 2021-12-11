@@ -2,10 +2,10 @@ all:
 	gcc -c poker.c -o poker.o
 	gcc poker.o hw0501.c -o hw0501
 
-	gcc -c data.c -o data.o
-	gcc data.o hw0502.c -o hw0502
+	gcc -c data.c -o data.o -lm
+	gcc data.o hw0502.c -o hw0502 -lm
 
-	gcc -c polynomial.c -o polynomial.o
+	gcc -c polynomial.c -o polynomial.o 
 	gcc polynomial.o hw0503.c -o hw0503
 
 	gcc -c banqi.c -o banqi.o
