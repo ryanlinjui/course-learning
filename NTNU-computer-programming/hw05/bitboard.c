@@ -4,7 +4,7 @@
 //array order:7,6,5,4,3,2,1,
 //            G,F,E,D,C,B,A,
 //            ' ',*
-uint32_t elememt[16] = {0x10020000,0x00000000,0x00080000,0x00000000,0x00000000,0x02000000,0x40000000
+uint32_t elememt[16] = {0x10020000,0x40000000,0x00080000,0x00000000,0x00000000,0x02000000,0x00000000
                        ,0x80200000,0x00040000,0x00000000,0x00400000,0x00000000,0x00000000,0x20000000
                        ,0x0C902000,0x0101Dfff};
 // *,*,*,*
@@ -16,19 +16,24 @@ uint32_t elememt[16] = {0x10020000,0x00000000,0x00080000,0x00000000,0x00000000,0
 //  , ,2,*
 // G,1,A,7
 
+// uint32_t elememt[16] = {0x00000001,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000
+//                        ,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000000,0x00000002
+//                        ,0x0000000C,0xffffff0};
 
-uint32_t black = 0x005c7040
-        ,red = 0x06030e20
-        ,chess = 0xffdfffff;
+
+
+uint32_t black = 0x520A0000
+        ,red = 0xA0640000
+        ,chess = 0xf36fDfff;
 
 uint32_t board_y[4] = {0x11111111,0x22222222,0x44444444,0x88888888};
 uint32_t board_x[8] = {0x0000000F,0x000000F0,0x00000F00,0x0000F000,0x000F0000,0x00F00000,0x0F000000,0xF0000000};
-int _index[32] = {31,0,1,5,2,16,27,6,3,14,17,19,28,11,7,21,30,4,15,26,13,18,10,20,29,25,12,9,24,8,23,22};
+int32_t _index[32] = {31,0,1,5,2,16,27,6,3,14,17,19,28,11,7,21,30,4,15,26,13,18,10,20,29,25,12,9,24,8,23,22};
 uint32_t chess_move[32] = {0x00000012,0x00000025,0x0000004A,0x00000084,0x00000121,0x00000252,0x000004A4,0x00000848,
                         0x00001210,0x00002520,0x00004A40,0x00008480,0x00012100,0x00025200,0x0004A400,0x00084800,
                         0x00121000,0x00252000,0x004A4000,0x00848000,0x01210000,0x02520000,0x04A40000,0x08480000,
                         0x12100000,0x25200000,0x4A400000,0x84800000,0x21000000,0x52000000,0xA4000000,0x48000000};
-int color=0;
+int32_t color=0;
 
 uint32_t get_least_bit(uint32_t x)
 {
@@ -46,7 +51,7 @@ uint32_t get_first_bit(uint32_t x)
     return (x>>1)+1;
 }
 
-int get_board_index(uint32_t mask)
+int32_t get_board_index(uint32_t mask)
 {
     return _index[(mask*0x08ED2BE6)>>27];
 }
@@ -77,11 +82,11 @@ uint32_t c_method_CR(uint32_t x)
     }    
 }
 
-uint32_t c_method(int x)
+uint32_t c_method(int32_t x)
 {
     uint32_t co,ro;
-    int co_n = x / 4;
-    int ro_n = x % 4;
+    int32_t co_n = x / 4;
+    int32_t ro_n = x % 4;
     x = ((board_x[co_n] & chess) ^ (1<<x)) >> (4*co_n);
     if(co_n==0)
     {
@@ -155,7 +160,7 @@ void available()
         {
             uint32_t mask = get_least_bit(p);
             p ^= mask;
-            int src = get_board_index(mask);
+            int32_t src = get_board_index(mask);
             uint32_t dest;
             if(i==0 & color==1)
             {
@@ -212,6 +217,7 @@ void available()
             else if(i==13 & color==-1)
             {
                 dest = chess_move[src] & (black^elememt[0]|elememt[14]);
+                //printf("%08x\n%08x\n%08x\n",black,elememt[0],elememt[13]);
             }
             else
             {
@@ -221,7 +227,7 @@ void available()
             {
                 uint32_t mask2 = get_least_bit(dest);
                 dest ^= mask2;
-                int result  = get_board_index(mask2);
+                uint32_t result  = get_board_index(mask2);
                 printf("%u,%u\n",src,result);
             }
         }
@@ -232,5 +238,6 @@ int main()
 {
     scanf("%d",&color);
     available();
+    printf("\n%08x\n",elememt[14]&chess);
     return 0;
 }
