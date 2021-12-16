@@ -8,8 +8,9 @@ all:
 	gcc -c polynomial.c -o polynomial.o 
 	gcc polynomial.o hw0503.c -o hw0503
 
+	gcc -c bitboard.c -o bitboard.o
 	gcc -c banqi.c -o banqi.o
-	gcc banqi.o hw0504.c -o hw0504
+	gcc banqi.o bitboard.o hw0504.c -o hw0504
 
 	gcc bonus.c -o bonus
 
