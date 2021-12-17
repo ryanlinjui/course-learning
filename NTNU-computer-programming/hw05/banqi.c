@@ -153,7 +153,8 @@ void board_update()
         if(turn==1)
         {
             printf("Player 1 (x,y):");
-            scanf("%d,%d",&x,&y);
+            int wr_input = scanf("%d,%d",&x,&y);
+            if(wr_input!=2){printf("Wrong Input Formate!!\n");exit(0);}
             action[0] = (x-1)+(y-1)*8;
             if(action[0]<0||action[0]>31)
             {
@@ -166,14 +167,16 @@ void board_update()
             else
             {
                 printf("To (x,y): ");
-                scanf("%d,%d",&x,&y);
+                int wr_input = scanf("%d,%d",&x,&y);
+                if(wr_input!=2){printf("Wrong Input Formate!!\n");exit(0);}
                 action[1] = (x-1)+(y-1)*8;
             }
         }
         else if(turn==-1)
         {
             printf("Player 2 (x,y):");
-            scanf("%d,%d",&x,&y);
+            int wr_input = scanf("%d,%d",&x,&y);
+            if(wr_input!=2){printf("Wrong Input Formate!!\n");exit(0);}
             action[0] = (x-1)+(y-1)*8;
             if(action[0]<0||action[0]>31)
             {
@@ -186,7 +189,8 @@ void board_update()
             else
             {
                 printf("To (x,y): ");
-                scanf("%d,%d",&x,&y);
+                int wr_input = scanf("%d,%d",&x,&y);
+                if(wr_input!=2){printf("Wrong Input Formate!!\n");exit(0);}
                 action[1] = (x-1)+(y-1)*8;
             }
         }
@@ -223,6 +227,7 @@ void board_update()
             continue;
         }
     }
+    //printf("%d\n",draw_step);
 }
 
 void loop_game()

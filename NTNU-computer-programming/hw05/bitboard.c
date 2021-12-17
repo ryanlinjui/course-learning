@@ -26,6 +26,7 @@
 
 // int32_t color=0;
 
+static int available_step[32*32];
 uint32_t black = 0x00000000
         ,red =   0x00000000
         ,chess = 0x00000000;
@@ -166,7 +167,6 @@ uint32_t c_method(int32_t x)
 
 int *available(uint32_t element[],int color)
 {
-    static int available_step[32*32];
     for(int i=0;i<32*32;i++)
     {
         available_step[i] = 0;   
@@ -191,6 +191,11 @@ int *available(uint32_t element[],int color)
         }
         chess |= element[i];
     }
+    // printf("black:0x%08x\n",black);
+    // printf("red:0x%08x\n",red);
+    // printf("chess:0x%08x\n",chess);
+    // printf("' ':0x%08x\n",element[14]);
+    // printf("'*':0x%08x\n",element[15]);
     // for(int i=0;i<16;i++)
     // {
     //     printf("%d:0x%08x\n",i,element[i]);
@@ -198,12 +203,13 @@ int *available(uint32_t element[],int color)
     for(int i=0;i<14;i++)
     {
         uint32_t p = element[i];
+        //printf("%d:0x%08x\n",i,p);
         while (p)
         {
             uint32_t mask = get_least_bit(p);
             p ^= mask;
             int32_t src = get_board_index(mask);
-            uint32_t dest;
+            uint32_t dest=0;
             if(i==0 & color==1)
             {
                 dest = chess_move[src] & (element[7]|element[13]|element[14]);
@@ -260,16 +266,16 @@ int *available(uint32_t element[],int color)
             {
                 dest = chess_move[src] & (black^element[0]|element[14]);
             }
+            //printf("dest:0x%08x\n",dest);
             while (dest)
             {
                 uint32_t mask2 = get_least_bit(dest);
                 dest ^= mask2;
-                uint32_t result  = get_board_index(mask2);
-                
+                int32_t result  = get_board_index(mask2);
                 src = (src%4)*8+(src/4);
                 result = (result%4)*8+(result/4);
-                printf("asud\n");
-                printf("%u,%u\n",src,result);
+                //printf("asud\n");
+                // printf("%d,%d\n",src,result);
                 available_step[src*32+result] = 1;
             }
         }
@@ -280,7 +286,7 @@ int *available(uint32_t element[],int color)
         {
             int _i = (i%4)*8+(i/4);
             available_step[_i*32+_i] = 1;    
-            // printf("%d,%d\n",_i,_i);
+            //printf("%d,%d\n",_i,_i);
         }
     }
     // for(int i=0;i<32;i++)
