@@ -13,9 +13,12 @@ int draw_step=0;
 int color=0;
 int turn=0;
 int *available_step;
+int init_color=1;
+char player_identity[3];
 
 void initial_game()
 {   
+    init_color=1;
     int random_degree=100;
 
     for (int i=0;i<32;i++)
@@ -45,14 +48,15 @@ int end_game()
         }
         if(i==32*32-1)
         {
-            if(color==1)
-            {
-                printf("RED WIN!!\n");
-            }
-            else
-            {
-                printf("BLACK WIN!!\n");
-            }
+            // if(color==1)
+            // {
+            //     printf("RED WIN!!\n");
+            // }
+            // else
+            // {
+            //     printf("BLACK WIN!!\n");
+            // }
+            printf("Player %c win!!\n",player_identity[color+1]);
             return 1;
         }
     }
@@ -66,18 +70,23 @@ int end_game()
 
 void set_color()
 {
-    for(int i=0; i<32;i++)
+    for(int i=0; i<32&&init_color;i++)
     {
         if(board[i] != '*')
         {
             if(board[i] >= 49&&board[i]<=55)
             {
                 color = 1;
+                player_identity[0] = '1';
+                player_identity[2] = '2';
             }
             else
             {
                 color = -1;
+                player_identity[0] = '2';
+                player_identity[2] = '1';
             }
+            init_color = 0;
         }
     }
     color *= -1;
@@ -132,23 +141,56 @@ void board_update()
     int action[2]={0,0};
     while(1)
     {
-        if(color==1)
-        {
-            printf("BLACK\n");
-        }
-        else if(color==-1)
-        {
-            printf("RED\n");
-        }
+        // if(color==1)
+        // {
+        //     printf("BLACK\n");
+        // }
+        // else if(color==-1)
+        // {
+        //     printf("RED\n");
+        // }
+        int invalid=0,x=0,y=0;
         if(turn==1)
         {
-            scanf("%d,%d",&action[0],&action[1]);
+            printf("Player 1 (x,y):");
+            scanf("%d,%d",&x,&y);
+            action[0] = (x-1)+(y-1)*8;
+            if(action[0]<0||action[0]>31)
+            {
+                invalid = 1;
+            }
+            else if(board[action[0]]=='*')
+            {
+                action[1] = action[0];
+            }
+            else
+            {
+                printf("To (x,y): ");
+                scanf("%d,%d",&x,&y);
+                action[1] = (x-1)+(y-1)*8;
+            }
         }
         else if(turn==-1)
         {
-            scanf("%d,%d",&action[0],&action[1]);
+            printf("Player 2 (x,y):");
+            scanf("%d,%d",&x,&y);
+            action[0] = (x-1)+(y-1)*8;
+            if(action[0]<0||action[0]>31)
+            {
+                invalid = 1;
+            }
+            else if(board[action[0]]=='*')
+            {
+                action[1] = action[0];
+            }
+            else
+            {
+                printf("To (x,y): ");
+                scanf("%d,%d",&x,&y);
+                action[1] = (x-1)+(y-1)*8;
+            }
         }
-        if((action[0]<0&action[0]>31)||(action[1]<0&action[1]>99))
+        if((action[0]<0&action[0]>31)||(action[1]<0&action[1]>31)||invalid)
         {
             printf("Invalid Action!!\n");
             continue;
@@ -169,7 +211,7 @@ void board_update()
             }
             else
             {
-                board[action[1]] = r_board[action[0]];
+                board[action[1]] = board[action[0]];
                 board[action[0]] = ' ';
             }
             turn *= -1;

@@ -92,7 +92,7 @@ uint32_t c_method(int32_t x)
     int32_t co_n = x / 4;
     int32_t ro_n = x % 4;
     x = ((board_y[ro_n] & chess) ^ (1<<src))>>(4*ro_n);
-    //printf("\nx:%08x\n",x);
+    ////printf("\nx:%08x\n",x);
     if(co_n==0)
     {
         co = c_method_CL(x);
@@ -121,7 +121,7 @@ uint32_t c_method(int32_t x)
         uint32_t part = 0;
         part = c_method_CR(x&0x00001111);
         co = part|c_method_CL(x&0x11100000);
-        //printf("\nx:%08x\npart:%08x\nco:%08x\n",x,part,co);
+        ////printf("\nx:%08x\npart:%08x\nco:%08x\n",x,part,co);
     }
     else if(co_n==5)
     {
@@ -138,7 +138,7 @@ uint32_t c_method(int32_t x)
         co = c_method_CR(x);
     }
     //co = x ^ 0x11111111;
-    printf("\nx:%08x\nco:%08x\n",x,co);
+    //printf("\nx:%08x\nco:%08x\n",x,co);
     x = ((board_x[co_n] & chess) ^ (1<<src))>>(4*co_n);
     if(ro_n==0)
     {
@@ -158,9 +158,9 @@ uint32_t c_method(int32_t x)
     }
     ro<<=(4*co_n);
     co<<=ro_n;
-    //printf("\nco:%08x\nro:%08x\n",co,ro);
+    ////printf("\nco:%08x\nro:%08x\n",co,ro);
     //0x44010400
-    printf("\nans:%08x\n",ro|co);
+    //printf("\nans:%08x\n",ro|co);
     return ro | co;
 }
 
@@ -191,10 +191,10 @@ int *available(uint32_t element[],int color)
         }
         chess |= element[i];
     }
-    for(int i=0;i<16;i++)
-    {
-        printf("%d:0x%08x\n",i,element[i]);
-    }
+    // for(int i=0;i<16;i++)
+    // {
+    //     printf("%d:0x%08x\n",i,element[i]);
+    // }
     for(int i=0;i<14;i++)
     {
         uint32_t p = element[i];
@@ -268,6 +268,7 @@ int *available(uint32_t element[],int color)
                 
                 src = (src%4)*8+(src/4);
                 result = (result%4)*8+(result/4);
+                printf("asud\n");
                 printf("%u,%u\n",src,result);
                 available_step[src*32+result] = 1;
             }
@@ -279,16 +280,16 @@ int *available(uint32_t element[],int color)
         {
             int _i = (i%4)*8+(i/4);
             available_step[_i*32+_i] = 1;    
-            printf("%d,%d\n",_i,_i);
+            // printf("%d,%d\n",_i,_i);
         }
     }
     // for(int i=0;i<32;i++)
     // {
     //     for(int j=0;j<32;j++)
     //     {
-    //         printf("%d,%d:%d||",i,j,available_step[i*32+j]);
+    //         //printf("%d,%d:%d||",i,j,available_step[i*32+j]);
     //     }
-    //     printf("\n");
+    //     //printf("\n");
     // }
     return available_step;
 }
