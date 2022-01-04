@@ -1,177 +1,182 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+ 
+int32_t day_diff(int32_t year_start, int32_t month_start, int32_t day_start, int32_t year_end, int32_t month_end, int32_t day_end)
+{
+    int32_t y2, m2, d2;
+    int32_t y1, m1, d1;
+    m1 = (month_start + 9) % 12;
+    y1 = year_start - m1/10;
+    d1 = 365*y1 + y1/4 - y1/100 + y1/400 + (m1*306 + 5)/10 + (day_start - 1);
+    m2 = (month_end + 9) % 12;
+    y2 = year_end - m2/10;
+    d2 = 365*y2 + y2/4 - y2/100 + y2/400 + (m2*306 + 5)/10 + (day_end - 1);    
+    return (d2 - d1);
+}
 
-typedef struct{
-    int64_t year;
-    int64_t month;
-    int64_t date;
-    int64_t hour;
-    int64_t minute;
-}time;
+int32_t Day_caculate(int32_t year, int32_t month,int32_t day) //2020/3/5 ac:4 wr:3
+{                                                             //1998/8/24 ac:1 wr:-5
+    int32_t Day2021[12] = {5,1,1,4,6,2,4,7,3,5,1,3};          //2020/3/1 ac:7
+    int32_t LenYear_add = 0;                                  //2022/3/1 ac:2
+    if(year>=2021)                                            //1998/8/1 ac:6
+    {
+        if(year%4==0 && month>2)
+        {   
+            LenYear_add += 1;
+        }
+        int32_t LenYear_num = LenYear_add+((year-2021)/4);
+        return (((Day2021[month-1]+(year-2021)+LenYear_num)+((day-1)%7)-1)%7)+1;
+    }
+    else
+    {
+        if(year%4==0 && month<=2)
+        {   
+            LenYear_add -= 1;
+        }
+        int32_t LenYear_num = LenYear_add+((year-2021)/4);
+        return (((Day2021[month-1]+(year-2021)+LenYear_num)+((day-1)%7)-1)%7)+1;
+    }
+}
 
-void errorMessage();
-void errorInputDetect(time);
-void errorTimeDetect(time, time);
-int64_t allldayCounter(time, time);
-int8_t weekCounter(time);
-int64_t workDayCounter(time, time, int64_t);
-int64_t workTimeCounter(time, time, int64_t);
+int32_t WeekDay_caculate(int32_t day_total,int32_t day_start,int32_t day_end) 
+{
+    //not include then day-start and day-end
+    if(day_total==0||day_total==1)
+    {
+        return 0;
+    }
+    int32_t weekday_total = (day_total/7)*5;
+    if(day_total%7==0)
+    {
+        return weekday_total-1;
+    }
+    if(day_start>=6&&day_start<=7)
+    {
+        day_start=1;
+    }
+    if(day_end>=6&&day_end<=7)
+    {
+        day_end = 5;
+    }
+    return weekday_total+(day_end-day_start)-1;
+}
 
+int32_t ThenDay_min_caculate(int32_t day_total,int32_t day_hour_start,int32_t day_min_start,int32_t day_hour_end,int32_t day_min_end)
+{
+    int32_t day_start_total_min = 0;
+    int32_t day_end_total_min = 0;
+    int32_t day_start = day_hour_start*60+day_min_start;
+    int32_t day_end = day_hour_end*60+day_min_end;
+    if(day_total>0){
+        //day_start_total_min calculate
+        if(day_start<9*60)
+        {
+            day_start_total_min = 8*60;
+        }
+        else if(day_start>185*6)
+        {
+            day_start_total_min = 0;
+        }
+        else if(day_start<12*60)
+        {
+            day_start_total_min = 5*60+(12*60-day_start_total_min);
+        }
+        else if(day_start>135*6)
+        {
+            day_start_total_min = 185*6-day_start_total_min;
+        }
+        else
+        {
+            day_start_total_min = 5*60;   
+        }
+        //day_end_total_min calculate
+        if(day_end<9*60)
+        {
+            day_end_total_min = 0;
+        }
+        else if(day_end>185*6)
+        {
+            day_end_total_min =8*60;
+        }
+        else if(day_end<12*60)
+        {
+            day_end_total_min = day_end_total_min-9*60;
+        }
+        else if(day_end>135*6)
+        {
+            day_end_total_min = 3*60+(day_end_total_min-135*6);
+        }
+        else
+        {
+            day_end_total_min = 3*60;
+        }
+        return day_start_total_min+day_end_total_min;
+    }
+    else
+    {
+        int32_t data[2] = {day_start,day_end};
+        for(int i=0; i<2;i++)
+        {
+            if(data[i]<8*30)
+            {
+                data[i] = 8*30;
+            }
+            else if(data[i]>185*3)
+            {
+                data[i] = 185*3;
+            }
+        }
+        if((data[0]>=12*60&&data[0]<=135*6)||(data[1]>=12*60&&data[1]<=135*6))
+        {
+            if(data[0]>=12*60&&data[0]<=135*6&&data[1]>=12*60&&data[1]<=135*6)
+            {
+                return 0;
+            }   
+            else if(data[0]>=12*60&&data[0]<=135*6)
+            {
+                data[0] = 135*6;
+            }
+            else if(data[1]>=12*60&&data[1]<=135*6)
+            {
+                data[1] = 12*60;
+            }
+        }
+        return data[1]-data[0];
+    }
+    
+}
 
-int main(){
-    time startTime, endTime;
+int main()
+{
+    int32_t month_day[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int32_t year[2],month[2],day[2],hour[2],min[2];
+    int32_t total_min=0,wt=8,day_diff_total=0,day_start=0,day_end=0,weekday_total=0,then_day_min_total=0;
     printf("$ ./hw0203\n");
     printf("From: ");
-    scanf("%lld/%lld/%lld %lld:%lld", &(startTime.year), &(startTime.month), &(startTime.date), &(startTime.hour), &(startTime.minute));
-    errorInputDetect(startTime);
+    scanf("%d/%d/%d %d:%d",&year[0],&month[0],&day[0],&hour[0],&min[0]);
     printf("To: ");
-    scanf("%lld/%lld/%lld %lld:%lld", &(endTime.year), &(endTime.month), &(endTime.date), &(endTime.hour), &(endTime.minute));
-    errorInputDetect(endTime);
-    errorTimeDetect(startTime, endTime);
-
-    int64_t alllday = allldayCounter(startTime, endTime);
-    int64_t workDay = workDayCounter(startTime, endTime, alllday);
-
-    workTimeCounter(startTime, endTime, workDay);
-
-    return 0;
-}
-
-void errorMessage(){
-    printf("ERROR\n");
-    exit(0);
-}
-
-void errorInputDetect(time day){
-    int8_t monthDay[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    if(day.year <= 0 || day.month <= 0 || day.date <= 0 || day.hour < 0 || day.minute < 0 || day.minute >= 60){
-        errorMessage();
+    scanf("%d/%d/%d %d:%d",&year[1],&month[1],&day[1],&hour[1],&min[1]);
+    if(hour[0]<0||hour[1]<0||hour[0]>23||hour[1]>23||min[0]<0||min[1]<0||min[0]>=60||min[1]>=60||year[0]<0||year[1]<0||month[0]<0||month[1]<0||month[0]>12||month[1]>12||day[0]<1||day[1]<1)
+    {
+        printf("ERROR\n");
+        return 0;
     }
-    if(day.month > 12){
-        errorMessage();
+    if(day[0]>month_day[month[0]]||day[1]>month_day[month[1]])
+    {
+        if(day[0]==29||day)
     }
-    if(day.date > monthDay[day.month - 1]){
-        errorMessage();
+    day_diff_total = day_diff(year[0],month[0],day[0],year[1],month[1],day[1]);
+    if(day_diff_total<0)
+    {
+        printf("ERROR\n");
+        return 0;
     }
-    if(day.hour > 24 || (day.hour == 24 && day.minute != 0) ){
-        errorMessage();
-    }
-    if( !(day.year % 400 == 0 || ( day.year % 4 == 0 && day.year % 100 != 0 ) ) && day.month == 2 && day.date == 29){
-        errorMessage();
-    }
-
-}
-
-void errorTimeDetect(time start, time end){
-    if(start.year > end.year){
-        errorMessage();
-    }
-    else if(start.year == end.year){
-        if(start.month > end.month){
-            errorMessage();
-        }
-        else if(start.month == end.month){
-            if(start.date > end.date){
-                errorMessage();
-            }
-            else if(start.date == end.date){
-                if(start.hour > end.hour){
-                    errorMessage();
-                }
-                else if(start.hour == end.hour){
-                    if(start.minute > end.minute){
-                        errorMessage();
-                    }
-                }
-            }
-        }
-    }
-}
-
-int64_t allldayCounter(time start,  time end){
-    int64_t y1, m1, d1;
-    int64_t y2, m2, d2;
-    m1 = (start.month + 9) % 12;
-    y1 = start.year - m1 / 10;
-    d1 = 365 * y1 + y1 / 4 - y1 / 100 + y1 / 400 + (m1 * 306 + 5) / 10 + (start.date - 1);
-    
-    m2 = (end.month + 9) % 12;
-    y2 = end.year - m2 / 10;
-    d2 = 365 * y2 + y2 / 4 - y2 / 100 + y2 / 400 + (m2 * 306 + 5) / 10 + (end.date - 1);
-    
-    return (d2 - d1) + 1;
-}
-
-int8_t weekCounter(time day){
-    return (day.date += day.month < 3 ? day.year-- : day.year - 2, 23 * day.month / 9 + day.date + 4 + day.year / 4- day.year / 100 + day.year / 400) % 7;
-}
-
-int64_t workDayCounter(time start, time end, int64_t alllday){
-    int8_t startWeek = weekCounter(start);
-    int8_t endWeek = weekCounter(end);
-    int64_t holidayDay = ((alllday - 1) / 7) * 2 ;
-    while(startWeek != endWeek){
-        if(startWeek == 6 || startWeek == 0){
-            holidayDay++;
-        }
-        startWeek = (startWeek + 1) % 7;
-    }
-    return alllday - holidayDay - (endWeek == 6 || endWeek == 0);
-}
-
-int64_t workTimeCounter(time start,time end, int64_t workDay){
-    int64_t workHour = workDay * 8;
-    int64_t workMinute = 0;
-    int8_t startWeek = weekCounter(start);
-    int8_t endWeek = weekCounter(end);
-    if(startWeek != 0 && startWeek != 6){
-        if(start.hour < 9 || start.hour == 9 && start.minute == 0){
-        }
-        else if(start.hour < 12 || start.hour == 12 && start.minute == 0){
-            workHour -= start.hour - 9;
-            workMinute -= start.minute;
-        }
-        else if(start.hour < 13 || start.hour == 13 && start.minute <= 30){
-            workHour -= 3;
-        }
-        else if(start.hour < 18 || start.hour == 18 && start.minute <= 30){
-            workHour -= (3 + start.hour - 13);
-            workMinute -= (start.minute - 30);
-        }
-        else{
-            workHour -= 8;
-        }
-    }
-    
-    if(endWeek != 0 && endWeek != 6){
-        workHour -= 8;
-        if(end.hour < 9 || end.hour == 9 && end.minute == 0){
-        }
-        else if(end.hour < 12 || end.hour == 12 && end.minute == 0){
-            workHour += end.hour - 9;
-            workMinute += end.minute;
-        }
-        else if(end.hour < 13 || end.hour == 13 && end.minute <= 30){
-            workHour += 3;
-        }
-        else if(end.hour < 18 || end.hour == 18 && end.minute <= 30){
-            workHour += (3 + end.hour - 13);
-            workMinute += (end.minute - 30);
-        }
-        else{
-            workHour += 8;
-        }
-    }
-    
-    if(workMinute >= 60){
-        workHour += (workMinute / 60);
-        workMinute %= 60;
-    }
-    while(workMinute < 0){
-        workHour--;
-        workMinute += 60;
-    }
-    printf("Working Hours : %lld hours %lld mins.\n", workHour, workMinute);
+    day_start = Day_caculate(year[0],month[0],day[0]);
+    day_end = Day_caculate(year[1],month[1],day[1]);
+    weekday_total = WeekDay_caculate(day_diff_total,day_start,day_end);
+    then_day_min_total = ThenDay_min_caculate(day_diff_total,hour[0],min[0],hour[1],min[1]);
+    total_min = then_day_min_total+weekday_total*wt;
+    printf("Working Hours : %d hours %d mins.\n",total_min/60,total_min%60);
     return 0;
 }
