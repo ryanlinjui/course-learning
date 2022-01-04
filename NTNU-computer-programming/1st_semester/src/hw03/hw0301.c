@@ -1,38 +1,3 @@
-//1. m, n的範圍為32bit整數。
-//2. invalid input在這題的定義是給定符合(1.)的m, n後，無法產生任何數字輸出的情況。
-//小提示：所有符合(1.)、不違反(2.)的輸入，都必須完整且正確的輸出。
-
-/*#include <stdio.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdlib.h>
-
-int main()
-{
-    int64_t m=0,n=0;
-    printf("$ ./hw0301\n");
-    printf("Please enter the width : ");
-    scanf("%lld",&m);
-    printf("Please enter the height: ");
-    scanf("%lld",&n);
-    if(m<1||n<1){
-        printf("ERROR\n");
-    }
-    
-    for(int i=1;i<=n;i++){
-        printf("%ld",i);
-        //for(int j=)
-        printf("%ld\n",m+n+n-i-1);
-    }
-    return 0;
-}
-*/
-
-
-
-
-
-
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>

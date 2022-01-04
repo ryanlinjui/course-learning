@@ -1,5 +1,3 @@
-//1. input integers的範圍為32bit整數。
-
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

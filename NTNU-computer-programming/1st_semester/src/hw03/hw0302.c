@@ -1,8 +1,3 @@
-//1. overflow case在這題的定義為結果會超過32bit可以表達的範圍為overflow
-
-//1. 32bit整數是指int32_t，如果是無號的會額外說。
-//2. 32bit可以表達的範圍包含int32_t和uint32_t，所以hw0302的overflow case是指超出-2147483648~4294967295這個範圍的數。
-
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
