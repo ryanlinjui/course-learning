@@ -13,7 +13,7 @@ void set_val(int64_t *num,int64_t position,int64_t new_val)
 {
 
     int8_t *val = (int8_t*)(num);
-    *(val + (8-(int8_t)position)) = (int8_t)(new_val) & 0xFF;
+    *(val + (8-(int8_t)position)) = ((int8_t)(new_val)) & 0xFF;
 }
 
 int main()
