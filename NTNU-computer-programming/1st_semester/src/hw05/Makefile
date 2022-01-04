@@ -1,3 +1,5 @@
+.IGNORE : all clean
+
 all:
 	gcc -c poker.c -o poker.o
 	gcc poker.o hw0501.c -o hw0501
@@ -14,8 +16,8 @@ all:
 
 	gcc bonus.c -o bonus
 
-zip: 
-	zip hw05 *
-
 clean:
-	rm *.o 
+	rm *.o hw050? bonus
+
+zip:
+	zip -r hw05.zip hw050?.c *.h README.md Makefile *.pdf

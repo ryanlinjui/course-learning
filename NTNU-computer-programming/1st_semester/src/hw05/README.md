@@ -1,12 +1,21 @@
-Student ID:41047035S
-Student Name:林昕鋭
+## hw0501
+> Big Two
 
-Hw0501:Big Two
+## hw0502
+> Statistics
 
-Hw0502:Statistics
+## hw0503
+> Polynomial Calculator
 
-Hw0503:Polynomial Calculator
+## hw0504
+> Banqi
 
-Hw0504:Banqi
+## bonus
+> An Interesting Code
 
-Bonus:An Interesting Code
+```
+Student ID: 41047035S
+Student Name: 林昕鋭
+Teacher Name: 紀博文
+Finish Date: 2021/12/17
+```
