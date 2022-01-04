@@ -1,12 +1,21 @@
-Student ID:41047035S
-Student Name:林昕鋭
+## hw0401
+> K
 
-Hw0401:K
+## hw0402-1
+> Tower of Hanoi (recursiveversion)
 
-Hw0402:Tower of Hanoi
+## hw0402-2
+> Tower of Hanoi (iterative)
 
-Hw0403:Triangle
+## hw0403
+> Triangle
 
-Hw0404:Equivalent Resistance
+## hw0404
+> Equivalent Resistance
 
-Bonus:printf and scanf
+```
+Student ID: 41047035S
+Student Name: 林昕鋭
+Teacher Name: 紀博文
+Finish Date: 2021/11/30
+```
