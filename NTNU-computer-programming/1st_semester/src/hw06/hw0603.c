@@ -13,7 +13,7 @@ void set_val(int64_t *num,int64_t position,int64_t new_val)
 {
 
     int8_t *val = (int8_t*)(num);
-    *(val + (8-(int8_t)position)) = ((int8_t)(new_val)) & 0xFF;
+    *(val + (8-(int8_t)position)) = (int8_t)(new_val);
 }
 
 int main()
@@ -27,7 +27,7 @@ int main()
         printf("The integer: %"SCNd64"\n",num);
         for(int8_t i=1; i<=8;i++)
         {
-            printf("(%"PRId32") 0x%02"PRIX8" ",i,show_byte(&num,8-i));
+            printf("(%"PRId32") 0x%02"PRIX8" ",i,show_byte(&num,8-i) & 0xFF);
         }
         printf("\nPlease enter the position (1-8, 0: End): ");
         int64_t position=0;
