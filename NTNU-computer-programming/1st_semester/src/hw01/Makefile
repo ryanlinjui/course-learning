@@ -1,3 +1,5 @@
+.IGNORE : all clean
+
 all:
 	gcc hw0101.c -o hw0101
 	gcc hw0102.c -o hw0102
@@ -8,4 +10,4 @@ clean:
 	rm *.o hw010? *.zip
 	
 zip:
-	zip -r hw01.zip hw010?.c Makefile README.md hw01.pdf
+	zip -r hw01.zip hw010?.c Makefile README.md *.pdf
