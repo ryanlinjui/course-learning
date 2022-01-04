@@ -3,17 +3,17 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-int8_t show_byte(int64_t *num,int8_t position)
+int8_t show_byte(int64_t *num,int64_t position)
 {
     int8_t *val = (int8_t*)(num);
-    return *(val + position);
+    return *(val + (int8_t)position);
 }
 
-void set_val(int64_t *num,int8_t position,int64_t new_val)
+void set_val(int64_t *num,int64_t position,int64_t new_val)
 {
 
     int8_t *val = (int8_t*)(num);
-    *(val + (8-position)) = (int8_t)(new_val);
+    *(val + (8-(int8_t)position)) = (int8_t)(new_val);
 }
 
 int main()
@@ -30,8 +30,8 @@ int main()
             printf("(%"PRId32") 0x%02"PRIX8" ",i,show_byte(&num,8-i));
         }
         printf("\nPlease enter the position (1-8, 0: End): ");
-        int8_t position=0;
-        scanf("%"PRId8,&position);
+        int64_t position=0;
+        scanf("%"PRId64,&position);
         if(position<0||position>8)
         {
             printf("Invalid Input!!\n");
