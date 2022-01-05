@@ -24,9 +24,9 @@ int main()
         int64_t before = test_case[i][0];
         int64_t after = test_case[i][1];
         printf("Testcase(%2"PRId32"): before= %4"PRId64", after= %4"PRId64" --Result: ",i+1,before,after);       
-        int64_t **arr = malloc(before*sizeof(int64_t*));
-        my_realloc((void**)arr,before,after);
-        printf("arr:%p\n",arr);
+        int64_t *arr = malloc(before*sizeof(int64_t));
+        my_realloc((void*)(&arr),before,after);
+        printf("arr:%p\n",&arr);
         if(sizeof(arr)==after)
         {
             printf("AC\n");
@@ -37,5 +37,6 @@ int main()
         }
         free(arr);
     }
+    
     return 0;
 }
