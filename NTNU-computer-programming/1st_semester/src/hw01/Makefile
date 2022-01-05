@@ -10,4 +10,4 @@ clean:
 	rm *.o hw010? *.zip
 	
 zip:
-	zip -r hw01.zip hw010?.c Makefile README.md *.pdf
+	zip -r hw01.zip *.c Makefile README.md *.pdf

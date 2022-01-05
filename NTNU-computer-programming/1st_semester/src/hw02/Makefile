@@ -12,4 +12,4 @@ clean:
 	rm *.o hw020? bonus *.zip
 	
 zip:
-	zip -r hw02.zip hw020?.c bonus.c Makefile README.md
+	zip -r hw02.zip *.c Makefile README.md

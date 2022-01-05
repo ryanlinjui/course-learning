@@ -20,4 +20,4 @@ clean:
 	rm *.o hw060? bonus 
 
 zip:
-	zip -r hw06.zip hw060?.c *.h README.md Makefile bonus.pdf
+	zip -r hw06.zip *.c *.h README.md Makefile bonus.pdf

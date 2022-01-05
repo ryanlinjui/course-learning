@@ -9,4 +9,4 @@ clean:
 	rm *.o mid0?
 
 zip:
-	zip -r mid.zip mid0?.c Makefile README.md bonus.txt
+	zip -r mid.zip *.c Makefile README.md bonus.txt
