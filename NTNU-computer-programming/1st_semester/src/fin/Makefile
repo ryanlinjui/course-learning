@@ -16,4 +16,4 @@ clean:
 	rm *.o fin0?
 
 zip:
-	zip -r fin.zip *
+	zip -r fin.zip *.c *.h Makefile README.md bonus.txt
