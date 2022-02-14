@@ -9,6 +9,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        uses: rrr20020910/NTNU-computer-programming@main
         run: ls
         
