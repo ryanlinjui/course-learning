@@ -10,4 +10,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: test
         uses: rrr20020910/NTNU-computer-programming@main
-        run: bash test.sh
+        run: echo hwlll
