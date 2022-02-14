@@ -9,5 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        run: echo hellp
+        uses: rrr20020910/NTNU-computer-programming@main
+        run: ls
         
