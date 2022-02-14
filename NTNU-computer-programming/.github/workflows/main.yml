@@ -1,6 +1,8 @@
 name: testing
 on:
-  #push:
+  push:
+    branch: 
+    - main
   workflow_dispatch:
 
 jobs:
@@ -9,5 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test
-        run: ls
+        run: bash test.sh
         

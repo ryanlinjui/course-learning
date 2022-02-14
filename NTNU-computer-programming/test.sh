@@ -3,5 +3,5 @@ cd 1st
 cd $test_dir
 make clean
 make
-echo "Testing"
+./hw0101
 make clean
