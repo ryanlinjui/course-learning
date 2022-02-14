@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: test
-        uses: rrr20020910/NTNU-computer-programming@main
-        run: echo hwlll
+        run: echo hellp
+        
