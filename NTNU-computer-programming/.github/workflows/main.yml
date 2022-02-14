@@ -1,0 +1,13 @@
+name: testing
+on:
+  #push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: test
+        uses: rrr20020910/NTNU-computer-programming@main
+        run: bash test.sh
