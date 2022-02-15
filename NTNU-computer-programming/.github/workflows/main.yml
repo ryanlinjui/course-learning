@@ -1,4 +1,4 @@
-name: testing
+name: main
 on:
   push:
     branch: 
@@ -6,10 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  verify_all_file:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - name: test
         run: bash test.sh
-        
