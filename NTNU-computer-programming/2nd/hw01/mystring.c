@@ -90,7 +90,6 @@ long int mystrtol(const char *nptr, char **endptr, int base)
             break;
         }
     }
-    printf("start: %d ",start);
     //result
     *endptr = nptr+breakpoint;
     for (int i = breakpoint-1; i >= start; i--)
