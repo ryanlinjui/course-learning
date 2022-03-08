@@ -14,4 +14,4 @@ clean:
 	rm *.o hw010? *.zip bonus
 	
 zip:
-	zip -r hw01.zip *.c Makefile *.pdf
+	zip -r hw01.zip *.c Makefile *.pdf *.h
