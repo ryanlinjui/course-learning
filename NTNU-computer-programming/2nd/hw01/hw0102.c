@@ -42,7 +42,14 @@ int main()
         {
             for(int j=0;j<len_keyword;j++)
             {
-                printf("\033[35;1m%c\033[m", string[i+j]);
+                if(string[i+j]==keyword[j])
+                {
+                    printf("\033[35;1m%c\033[m", string[i+j]);
+                }
+                else
+                {
+                    printf("%c", string[i+j]);
+                }
             }
             count++;
             i+=len_keyword-1;
