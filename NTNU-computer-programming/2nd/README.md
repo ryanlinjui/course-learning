@@ -12,3 +12,12 @@
 - 5 Split
 - 6 Bonus: perror
 > [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW1-QA)
+
+## Hw02
+- 1 Wildcard Matching
+- 2 IEEE 754
+- 3 Puella Magi Madoka Magica
+- 4 Mixed Fraction Arithmetic
+- 5 Vector
+- 6 Bonus: Bit Operation
+> [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW2-QA)
