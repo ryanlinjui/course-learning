@@ -5,10 +5,14 @@
 
 int mystrsplit(char ***pppList, int *pCounter , const char *pStr, const char *pSeparator)
 {
+    printf("here\n");
+    fflush( stdout );
+
+    // return 0;
     int32_t len_pStr = strlen(pStr)-1;
     int32_t len_pSeparator = strlen(pSeparator)-1;
     
-    char pStr_cpy[10000000];
+    char pStr_cpy[1000];
     
     strcpy(pStr_cpy,pStr);
     *pCounter = 0;
