@@ -1,4 +1,4 @@
-test_dir="hw01"
+test_dir="hw02"
 cd 2nd/${test_dir}
 testfiles=$(cat testcase)
 make
