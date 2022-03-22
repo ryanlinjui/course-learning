@@ -1,58 +1,77 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <ctype.h>
+#include <string.h>
 
-char* pattern_filter(const char *pattern)
+uint8_t match(char* pStr,char* pPattern)
 {
-    int32_t len_pattern = strlen(pattern);
-    char* pattern_cpy = malloc(len_pattern);
-
-    for (int i = 0,skip=1; i < len_pattern; i++)
+    char *c_p=NULL,*m_p=NULL;
+    while((*pStr)&&(*pPattern!='*')) 
     {
-        if(pattern[i] == '*')
+        if((*pPattern!=*pStr)&&(*pPattern!='?')) 
         {
-            if(skip)
-            {
-                continue;
-            }
-            skip = 1;
+            return 0;
         }
-        else
-        {
-            skip = 0;
-        }
-        pattern_cpy[i] = pattern[i];
+        pPattern++;
+        pStr++;
     }
-    pattern_cpy[1] = 0;
-    return pattern_cpy;
+    while(*pStr) 
+    {
+        if(*pPattern=='*') 
+        {
+            pPattern++;
+            if(!(*pPattern))
+            {
+                return 1;
+            }
+            m_p = pPattern;
+            c_p = pStr+1;
+        } 
+        else if((*pPattern==*pStr)||(*pPattern=='?')) 
+        {
+            pPattern++;
+            pStr++;
+        } 
+        else 
+        {
+            pPattern = m_p;
+            pStr = c_p++;
+        }
+    }
+    while(*pPattern=='*') 
+    {
+        pPattern++;
+    }
+    return !(*pPattern);
 }
-
-
+    
 int mymatch(char ***pppList, const char *pStr, const char *pPattern)
 {
-    char *pattern = pattern_filter(pPattern);
-    printf("cpy:%s\n", pattern);
-    return 0;
-    int32_t len_pStr = strlen(pStr);
-    int32_t len_pPattern = strlen(pPattern);
-    int32_t count = 0;
-
-    for(int i = 0; i < len_pStr; i++)
+    char *pStr_cp = malloc(strlen(pStr));
+    char *pPattern_cp = malloc(strlen(pPattern));
+    strncpy(pStr_cp,pStr,strlen(pStr));
+    strncpy(pPattern_cp,pPattern,strlen(pPattern));
+    if((pppList == NULL)||(pStr == NULL)||(pPattern == NULL))
     {
-        for(int j = i; j < len_pStr; j++)
-        {
-            for (int p_Pstr = i; p_Pstr <= j; p_Pstr++)
-            {
-                for(int p_pPattern=0; p_Pstr <= len_pPattern; p_Pstr++)
-                {
-                    if(pStr[p_Pstr] == pPattern[p_pPattern])
-                    {
-
-                    }
-                }
-            }
-        }
+        return -1;
     }
-    return count;
+    int sum = 0;                     
+    if(*pppList == NULL) 
+    { 
+        *pppList = (char**)malloc(1000);
+    }
+    char *token = strtok(pStr_cp, " ");
+    for(int i=0;token!=NULL;i++,token=strtok(NULL," "))
+    {
+        (*pppList)[i] = (char*)malloc(strlen(token));
+        if(match(token,pPattern_cp))
+        {
+            sum++;
+            strncpy((*pppList)[i],token,strlen(token));
+        } 
+    }
+    free(pStr_cp);
+    free(pPattern_cp);
+    return sum;
 }

@@ -35,7 +35,6 @@ union
 
 int main()
 {
-    printf("$ ./hw0202\n");
     printf("Please enter a floating-point number (double precision): ");
     scanf("%lf",&ieee.num);
     printf("Sign: %x\n",ieee.element.sign);
