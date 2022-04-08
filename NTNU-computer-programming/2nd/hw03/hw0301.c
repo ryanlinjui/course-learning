@@ -5,7 +5,6 @@
 
 #define FILE_NAME "bible.txt"
 #define MAX_LEN 1000
-#define JSON_SIZE 3
 
 typedef struct _json_data
 {
@@ -23,7 +22,7 @@ int main()
     int32_t times=0;
     char *input = malloc(MAX_LEN);
     char *target = malloc(MAX_LEN);
-    JSON_DATA **founded = (JSON_DATA**)malloc(MAX_LEN);
+    JSON_DATA *founded=NULL;
     
     printf("Please enter the search target: ");
     fgets(target,MAX_LEN,stdin);
@@ -38,24 +37,23 @@ int main()
     
     while(!feof(file))
     {   
-        JSON_DATA data;
-        fgets(input,MAX_LEN,file);
-        read_json(input,&data);
-        if(match(data.text,target))
+        if(fgets(input,MAX_LEN,file)==NULL) break;
+        founded = realloc(founded,(times+1)*sizeof(JSON_DATA));
+        read_json(input,&founded[times]);
+        if(match(founded[times].text,target))
         {
-            founded[times] = &data;
             times++;
         }
     }
+
     printf("Found %d time(s)\n",times);
     for(int i=0; i<times; i++)
     {
-        printf("%d. %s %d:%d %s\n",i+1,founded[i]->book_id,founded[i]->cheaper,founded[i]->verse,founded[i]->text);
+        printf("%d. %s %d:%d %s\n",i+1,founded[i].book_id,founded[i].cheaper,founded[i].verse,founded[i].text);
     }
 
     fclose(file);
     free(input);
-    free(founded);
     free(target);
     return 0;
 }
@@ -77,11 +75,13 @@ void read_json(char *source, JSON_DATA *data)
         }
         else if(i==7) //text's element:char*
         {
-            data->text = token;
+            data->text = malloc(strlen(token)+1);
+            strncpy(data->text,token,strlen(token));
         }
         else if(i==15) //book_id's element:char*
         {
-            data->book_id = token;
+            data->book_id = malloc(strlen(token)+1);
+            strncpy(data->book_id,token,strlen(token));
         }
         token = strtok(NULL,match);
     }
@@ -94,10 +94,20 @@ int8_t match(char *source, char* target)
     {
         for(int j=0;target[j];j++)
         {
-            if(source[i+j]!=target[j])
+            if((target[j]>=65&&target[j]<=90)||(target[j]>=97&&target[j]<122))
             {
-                break;
+                if(abs(source[i+j]-target[j])&&(abs(source[i+j]-target[j])-32))
+                {
+                    break;
+                }
             }
+            else
+            {
+                if(source[i+j]-target[j])
+                {
+                    break;
+                }
+            }    
             if(j>=len_target-1)
             {
                 return 1;
