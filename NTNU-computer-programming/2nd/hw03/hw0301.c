@@ -27,7 +27,11 @@ int main()
     printf("Please enter the search target: ");
     fgets(target,MAX_LEN,stdin);
     target[strlen(target)-1] = (target[strlen(target)-1]=='\n') ? 0 : target[strlen(target)-1];
-    
+    if(!(target[0]))
+    {
+        printf("Invalid Input!!\n");
+        return 0;
+    } 
     FILE *file = fopen(FILE_NAME, "r");
     if(file==NULL)
     {
