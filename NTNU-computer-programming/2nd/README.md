@@ -21,3 +21,12 @@
 - 5 Vector
 - 6 Bonus: Bit Operation
 > [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW2-QA)
+
+## Hw03
+- 1 Bible
+- 2 SRT Player
+- 3 Circular Focus
+- 4 BMP with 16 bits
+- 5 Sliding Puzzle
+- 6 Bonus: setjmp and longjmp
+> [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW3-QA)
