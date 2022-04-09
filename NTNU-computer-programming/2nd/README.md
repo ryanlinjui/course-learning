@@ -30,3 +30,11 @@
 - 5 Sliding Puzzle
 - 6 Bonus: setjmp and longjmp
 > [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW3-QA)
+
+### Midterm
+- 1 My String Library v3
+- 2 World Development Indicators: Population
+- 3 Image Rotation
+- 4 Trigonometric Function Plotter
+- Bonus Your Comments
+

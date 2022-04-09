@@ -8,4 +8,4 @@ clean:
 	rm *.o hw0?0? *.zip bonus
 	
 zip:
-	zip -r hw03.zip *.c Makefile *.pdf *.h
+	zip -r hw03.zip *
