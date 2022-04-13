@@ -38,3 +38,10 @@
 - 4 Trigonometric Function Plotter
 - Bonus Your Comments
 
+## Hw04
+- 1 Visual Cryptography
+- 2 Code Generator
+- 3 Source Code Highlighter
+- 4 Game Cheater: Princess Maker 2
+- 5 Bonus: Wildcard
+> [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW4-QA)
