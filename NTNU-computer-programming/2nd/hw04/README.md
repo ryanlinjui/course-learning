@@ -1,46 +1,54 @@
 > **Student ID: 41047035S**  
 > **Student Name: 林昕鋭**  
 > **Teacher Name: 紀博文**  
-> **Finish Date: 2022/**
+> **Finish Date: 2022/04/27**
 
-## To build your code, please run:
+## To build all code, please run:
 ```
 make
 ```
-
+---
 ## hw0401
 ### Visual Cryptography
-> 
-
-> If you want to execute it, typing the command below:
+#### Imformation
+```
+./hw0401 --help
+```
+#### Excute
 ```
 ./hw0401
 ```
-> note: Empty string is invalid  
 
+---
 ## hw0402
 ### Code Generator
-> 
-
-> If you want to execute it, typing the command below:
+#### Imformation
+```
+./hw0402 --help
+```
+#### Excute
 ```
 ./hw0402
-``` 
-
+```
+---
 ## hw0403
 ### Source Code Highlighter
-> 
-
-> If you want to execute it, typing the command below:
+#### Imformation
+```
+./hw0403 --help
+```
+#### Excute
 ```
 ./hw0403
-``` 
-
+```
+---
 ## hw0404
 ### Game Cheater: Princess Maker 2
-> 
-
-> If you want to execute it, typing the command below:
+#### Imformation
+```
+./hw0404 --help
+```
+#### Excute
 ```
 ./hw0404
-``` 
+```
