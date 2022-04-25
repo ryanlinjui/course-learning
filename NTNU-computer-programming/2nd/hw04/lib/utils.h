@@ -17,7 +17,7 @@
 #define ESC "\x1b"
 #define SET_CLI_COLOR(str,args) ESC "[" # args "m" # str
 
-
+/*
 // debug message print
 #if defined(_DEBUG_) // issue: it's not work
     #define DUBUG_PRINT(fmt,...) \ 
@@ -26,6 +26,7 @@
 #else
     #define DUBUG_PRINT() {}
 #endif
+*/
 
 
 // when option --help added, print help text file

@@ -16,16 +16,16 @@ typedef struct COLOR
     uint8_t red;
 }COLOR;
 
-typedef struct COLOR16
-{
-    /* BMP's RGB(565) Formate
-        bbbbb (0~31)
-        gggggg (0~63)
-        rrrrr (0~31) */
-    uint8_t blue : 5;
-    uint8_t green : 6;
-    uint8_t red : 5;
-}__attribute__((__packed__))COLOR16;
+// typedef struct COLOR16
+// {
+//     /* BMP's RGB(565) Formate
+//         bbbbb (0~31)
+//         gggggg (0~63)
+//         rrrrr (0~31) */
+//     uint8_t blue : 5;
+//     uint8_t green : 6;
+//     uint8_t red : 5;
+// }__attribute__((__packed__))COLOR16;
 
 typedef struct _BITMAP //TODO: Complete bmp system
 {
@@ -137,19 +137,19 @@ void circular_focus(BITMAP *img,int32_t center[],int32_t radius,uint8_t color)
     }
 }
 
-void change_depth(BITMAP *img,uint8_t red,uint8_t green,uint8_t blue) //consider to remove
-{
-    // img->DIBHEADER.BITMAPINFOHEADER.depth = red + green + blue;
-    for(int x=0;x<(img->DIBHEADER.BITMAPINFOHEADER.width);x++)
-    {
-        for(int y=0;y<img->DIBHEADER.BITMAPINFOHEADER.height;y++)
-        {
-            img->pixel[y][x].red = (img->pixel[y][x].red >> (RGB_STANDARD_DEPTH - red)) & 0xF800;
-            img->pixel[y][x].green = (img->pixel[y][x].green >> (RGB_STANDARD_DEPTH - green)) & 0x07E0;
-            img->pixel[y][x].blue = (img->pixel[y][x].blue >> (RGB_STANDARD_DEPTH - blue)) & 0x001F;
-        }
-    }
-}
+// void change_depth(BITMAP *img,uint8_t red,uint8_t green,uint8_t blue) //consider to remove
+// {
+//     // img->DIBHEADER.BITMAPINFOHEADER.depth = red + green + blue;
+//     for(int x=0;x<(img->DIBHEADER.BITMAPINFOHEADER.width);x++)
+//     {
+//         for(int y=0;y<img->DIBHEADER.BITMAPINFOHEADER.height;y++)
+//         {
+//             img->pixel[y][x].red = (img->pixel[y][x].red >> (RGB_STANDARD_DEPTH - red)) & 0xF800;
+//             img->pixel[y][x].green = (img->pixel[y][x].green >> (RGB_STANDARD_DEPTH - green)) & 0x07E0;
+//             img->pixel[y][x].blue = (img->pixel[y][x].blue >> (RGB_STANDARD_DEPTH - blue)) & 0x001F;
+//         }
+//     }
+// }
 
 void to_grayscale(BITMAP *img)
 {
