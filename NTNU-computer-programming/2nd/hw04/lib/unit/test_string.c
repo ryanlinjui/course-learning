@@ -23,8 +23,28 @@ void test_insert()
     puts(str);
 }
 
+void test_replace()
+{
+    char *str = calloc(1000,sizeof(char));
+    str[0] = 'c';
+    str[1] = 'b';
+    str[2] = 'a';
+    str[3] = 'c';
+    str[4] = 'b';
+    str_replace(&str, "ac","");
+    puts(str);
+}
+
+void test_to_lower()
+{
+    char *str = calloc(1000,sizeof(char));
+    str_copy(str,"ABqwdC990");
+    str_to_lower(str);
+    puts(str);
+}
+
 int main()
 {
-    test_insert();
+    test_replace();
     return 0;
 }

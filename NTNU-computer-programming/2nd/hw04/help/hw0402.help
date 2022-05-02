@@ -1,0 +1,9 @@
+This is a Code Generator
+The options are as follows:
+• -i: Mandatory. The argument is the text file name which contains the structure. 
+• -n: Option. The argument is the structure name. Default: Test.
+• -p: Option. The argument is the output file name. Default: test.
+
+EXAMPLE: ./hw0402 -i ip.txt -n IPH -p ip 
+$ ls 
+ip.txt ip.c ip.h

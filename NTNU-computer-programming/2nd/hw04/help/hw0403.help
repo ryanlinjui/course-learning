@@ -1,4 +1,4 @@
-This is a visual cryptography program. 
+Highlighter Code Display
 EXAMPLE: ./hw0403 [OPTION] [FILE] 
 Options are as follows:
 • Without any options, you simply display the whole source code. 

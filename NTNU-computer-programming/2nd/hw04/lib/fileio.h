@@ -5,7 +5,7 @@
 void read_text_file(char **dest,char *filename) // TODO: array init
 {
     FILE *file = fopen(filename, "rb");
-    // CHECK_VALID(file!=NULL,"File is not exist!"); // issue: doesn't detect this function in utils.h
+    CHECK_VALID(file!=NULL,"File is not exist!");
     fseek(file, 0, SEEK_END);
     uint64_t file_size = ftell(file);
     rewind(file);

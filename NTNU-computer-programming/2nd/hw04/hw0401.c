@@ -90,10 +90,7 @@ void visual_cryptography(BITMAP *img,BITMAP *layer1,BITMAP *layer2,BITMAP *overl
 
 int main(int argc, char **argv)
 {
-    if(!strcmp(argv[1], "--help"))
-    {
-        show_help_info(HELP_FILE_PATH);
-    }
+    add_help_option(argc, argv);
     BITMAP img,layer1,layer2,overlap;
     read_img(&img,argv[1]);
     to_grayscale(&img);
