@@ -7,7 +7,7 @@ all:
 	gcc hw0404.c -o hw0404 -lm
 	
 clean:
-	rm *.o hw0?0? *.zip bonus
+	rm *.o hw0?0? *.zip bonus maldives_*.bmp
 	
 zip:
 	zip -r hw04.zip *

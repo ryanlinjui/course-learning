@@ -83,7 +83,7 @@ uint32_t str_find(char *str, char *target,uint32_t **index) //return row number 
 //string replace
 void str_replace(char **str,char *target,char *new_word)
 {
-    char *new_str = calloc(100000,sizeof(char));   
+    char *new_str = calloc(10000,sizeof(char));   
     for(int i=0,c=0; (*str)[i];)
     {
         // new_str = realloc(new_str,(c+2)*sizeof(char));

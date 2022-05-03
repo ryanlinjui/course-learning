@@ -24,8 +24,8 @@ void write_text_file(char **src,char *filename) // TODO: check array null
 int32_t read_text_file_2D(char ***dest,char *filename) //TODO: array init
 {
     char *text = NULL;
+    *dest = (char**)malloc(1);
     read_text_file(&text,filename);
-    
     int32_t count = 0;
     int i=0,s=0;
     for(;text[i];i++)
