@@ -61,7 +61,8 @@
 "Select a date you want to modify:\n" \
 "(1) month\n" \
 "(2) week\n" \
-"(3) day\n"
+"(3) day\n" \
+"(0) Previous\n"
 
 #define FIGURE_MSG \
 "Select a figure you want to modify:\n" \
@@ -69,7 +70,8 @@
 "(2) weight\n" \
 "(3) chest\n" \
 "(4) waist\n" \
-"(5) buttock\n"
+"(5) buttock\n" \
+"(0) Previous\n"
 
 struct 
 {
