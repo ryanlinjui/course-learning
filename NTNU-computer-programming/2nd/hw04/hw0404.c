@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     puts(Welcome_MSG);
     int32_t choice = -1;
     uint8_t func_num = 0;
-    char *filename = calloc(MAX_LEN,sizeof(char));
+    char *filename = calloc(MAX_LEN,sizeof(char)); // ../../../../Desktop/pm2/F101.GNX
     CHECK_VALID(scanf("%[^\n]%*c",filename) == 1 , "Invalid input filename!!");
     set_modifier(filename);
     while(1)

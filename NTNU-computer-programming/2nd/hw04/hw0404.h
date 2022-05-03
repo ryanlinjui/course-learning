@@ -8,10 +8,10 @@
 #define TOPIC_MSG \
 "Select a topic:\n" \
 "(1) Attribute\n" \
-"(2) Ability\n" \
-"(3) Reputation\n" \
+"(2) Reputation\n" \
+"(3) Ability\n" \
 "(4) Performance\n" \
-"(0) Exit program\n"
+"(0) Save and Exit program\n"
 
 #define ATTRIBUTE_MSG \
 "Select a arrribute you want to modify:\n" \
@@ -71,6 +71,14 @@ struct
 
 struct
 {
+    uint16_t fgt_rep;
+    uint16_t mag_rep;
+    uint16_t scl_rep;
+    uint16_t hkp_rep;
+}Reputation; //size: 8 Bytes
+
+struct
+{
     uint16_t fgt_skl;
     uint16_t attack;
     uint16_t defense;
@@ -78,14 +86,6 @@ struct
     uint16_t mag_atk;
     uint16_t mag_def; 
 }Ability; //size: 12 Bytes
-
-struct
-{
-    uint16_t fgt_rep;
-    uint16_t mag_rep;
-    uint16_t scl_rep;
-    uint16_t hkp_rep;
-}Reputation; //size: 8 Bytes
 
 struct
 {
@@ -98,16 +98,20 @@ struct
 }Performance; //size: 12 Bytes
 
 #define ATTRIBUTE_OFFSET 62
-#define ABILITY_OFFSET 82
-#define REPUTATION_OFFSET 94 
-#define PERFORMANCE_OFFSET 102
+#define REPUTATION_OFFSET 84
+#define ABILITY_OFFSET 92
+#define PERFORMANCE_OFFSET 104
+
+char *file=NULL;
+int32_t fd=0;
+uint64_t file_size = 0;
 
 void set_modifier(char *filename)
 {
-    int32_t fd = open( filename, O_RDWR );
-    CHECK_VALID(fd==-1,"Open file error!!");
+    fd = open( filename, O_RDWR );
+    CHECK_VALID(fd!=-1,"Open file error!!");
     
-    char *file = NULL;
+    file = NULL;
 
     // get fd size start
     struct stat statbuf; 
@@ -117,16 +121,23 @@ void set_modifier(char *filename)
         puts("fd error!!");
         exit(0);
     } 
-    uint64_t file_size =  statbuf.st_size; 
+    file_size =  statbuf.st_size; 
     // get fd size end
 
     file = mmap( 0, file_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
     
     memcpy(&Attribute,file+ATTRIBUTE_OFFSET,sizeof(Attribute));
-    memcpy(&Ability,file+ABILITY_OFFSET,sizeof(Ability));
     memcpy(&Reputation,file+REPUTATION_OFFSET,sizeof(Reputation));
+    memcpy(&Ability,file+ABILITY_OFFSET,sizeof(Ability));
     memcpy(&Performance,file+PERFORMANCE_OFFSET,sizeof(Performance));
+}
 
+void save_modifier()
+{
+    memcpy(file+ATTRIBUTE_OFFSET,&Attribute,sizeof(Attribute));
+    memcpy(file+REPUTATION_OFFSET,&Reputation,sizeof(Reputation));
+    memcpy(file+ABILITY_OFFSET,&Ability,sizeof(Ability));
+    memcpy(file+PERFORMANCE_OFFSET,&Performance,sizeof(Performance));
     munmap(file,file_size);
     close(fd);
 }
@@ -136,7 +147,13 @@ void topic_menu(int32_t choice, uint8_t *func_num)
     system("clear");
     puts(TOPIC_MSG);
     CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=4,"Value must be one and in range 0 to 4!!");
-    if(choice==0) exit(0);
+    if(choice==0)
+    {
+        save_modifier();
+        puts("File is modified, Saved");
+        exit(0);
+    }
+    
     *func_num = (uint8_t)choice;
 }
 
@@ -151,21 +168,10 @@ void attribute_menu(int32_t choice, uint8_t *func_num)
     }
     else
     {
-        *func_num = 1;
-    }
-}
-
-void ablity_menu(int32_t choice, uint8_t *func_num)
-{
-    system("clear");
-    puts(ABILITY_MSG);
-    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=6,"Value must be one and in range 0 to 6!!");
-    if(choice==0)
-    {
-        *func_num = 0;
-    }
-    else
-    {
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Attribute)+((uint16_t)choice-1)) = num;
         *func_num = 1;
     }
 }
@@ -181,7 +187,30 @@ void reputation_menu(int32_t choice, uint8_t *func_num)
     }
     else
     {
-        *func_num = 1;
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Reputation)+((uint16_t)choice-1)) = num;
+        *func_num = 2;
+    }
+}
+
+void ablity_menu(int32_t choice, uint8_t *func_num)
+{
+    system("clear");
+    puts(ABILITY_MSG);
+    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=6,"Value must be one and in range 0 to 6!!");
+    if(choice==0)
+    {
+        *func_num = 0;
+    }
+    else
+    {
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Ability)+((uint16_t)choice-1)) = num;
+        *func_num = 3;
     }
 }
 
@@ -196,7 +225,11 @@ void performance_menu(int32_t choice, uint8_t *func_num)
     }
     else
     {
-        *func_num = 1;
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Performance)+((uint16_t)choice-1)) = num;
+        *func_num = 4;
     }
 }
-void (*func_arr[5])(int32_t,uint8_t*) = {topic_menu,attribute_menu,ablity_menu,reputation_menu,performance_menu};
+void (*func_arr[5])(int32_t,uint8_t*) = {topic_menu,attribute_menu,reputation_menu,ablity_menu,performance_menu};
