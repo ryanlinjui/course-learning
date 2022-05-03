@@ -1,7 +1,13 @@
 Highlighter Code Display
-EXAMPLE: ./hw0403 [OPTION] [FILE] 
+
 Options are as follows:
 • Without any options, you simply display the whole source code. 
 • -n –linenum: Display the line number before each line.
 • -c –color: Display the code and make each keyword colorful.
 • -l –language: The given programming language. Default is C.
+
+EXAMPLE: ./hw0403 [OPTION] [FILE] 
+
+Support language: C, C++, Java, JS, Rust
+
+note: The highlighter logic in this program is ONLY do that highlight the keyword of programming language.

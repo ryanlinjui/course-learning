@@ -11,6 +11,8 @@
 "(2) Reputation\n" \
 "(3) Ability\n" \
 "(4) Performance\n" \
+"(5) Date\n" \
+"(6) Figure\n" \
 "(0) Save and Exit program\n"
 
 #define ATTRIBUTE_MSG \
@@ -55,6 +57,20 @@
 "(6) mag_def\n" \
 "(0) Previous\n"
 
+#define DATE_MSG \
+"Select a date you want to modify:\n" \
+"(1) month\n" \
+"(2) week\n" \
+"(3) day\n"
+
+#define FIGURE_MSG \
+"Select a figure you want to modify:\n" \
+"(1) height\n" \
+"(2) weight\n" \
+"(3) chest\n" \
+"(4) waist\n" \
+"(5) buttock\n"
+
 struct 
 {
     uint16_t stamina;
@@ -97,10 +113,28 @@ struct
     uint16_t personal;
 }Performance; //size: 12 Bytes
 
+struct
+{
+    uint16_t month;
+    uint16_t week;
+    uint16_t day;
+}Date; //size: 6 Bytes
+
+struct
+{
+    uint16_t height;
+    uint16_t weight;
+    uint16_t chest;
+    uint16_t waist;
+    uint16_t buttock;
+}Figure; //size: 10 Bytes
+
 #define ATTRIBUTE_OFFSET 62
 #define REPUTATION_OFFSET 84
 #define ABILITY_OFFSET 92
 #define PERFORMANCE_OFFSET 104
+#define DATE_OFFSET 52
+#define FIGURE_OFFSET 210
 
 char *file=NULL;
 int32_t fd=0;
@@ -130,6 +164,8 @@ void set_modifier(char *filename)
     memcpy(&Reputation,file+REPUTATION_OFFSET,sizeof(Reputation));
     memcpy(&Ability,file+ABILITY_OFFSET,sizeof(Ability));
     memcpy(&Performance,file+PERFORMANCE_OFFSET,sizeof(Performance));
+    memcpy(&Date,file+DATE_OFFSET,sizeof(Date));
+    memcpy(&Figure,file+FIGURE_OFFSET,sizeof(Figure));
 }
 
 void save_modifier()
@@ -138,6 +174,8 @@ void save_modifier()
     memcpy(file+REPUTATION_OFFSET,&Reputation,sizeof(Reputation));
     memcpy(file+ABILITY_OFFSET,&Ability,sizeof(Ability));
     memcpy(file+PERFORMANCE_OFFSET,&Performance,sizeof(Performance));
+    memcpy(file+DATE_OFFSET,&Date,sizeof(Date));
+    memcpy(file+FIGURE_OFFSET,&Figure,sizeof(Figure));
     munmap(file,file_size);
     close(fd);
 }
@@ -146,7 +184,7 @@ void topic_menu(int32_t choice, uint8_t *func_num)
 {
     system("clear");
     puts(TOPIC_MSG);
-    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=4,"Value must be one and in range 0 to 4!!");
+    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=6,"Value must be one and in range 0 to 6!!");
     if(choice==0)
     {
         save_modifier();
@@ -232,4 +270,43 @@ void performance_menu(int32_t choice, uint8_t *func_num)
         *func_num = 4;
     }
 }
-void (*func_arr[5])(int32_t,uint8_t*) = {topic_menu,attribute_menu,reputation_menu,ablity_menu,performance_menu};
+
+void date_menu(int32_t choice, uint8_t *func_num)
+{
+    system("clear");
+    puts(DATE_MSG);
+    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=3,"Value must be one and in range 0 to 3!!");
+    if(choice==0)
+    {
+        *func_num = 0;
+    }
+    else
+    {
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Date)+((uint16_t)choice-1)) = num;
+        *func_num = 5;
+    }
+}
+
+void figure_menu(int32_t choice, uint8_t *func_num)
+{
+    system("clear");
+    puts(FIGURE_MSG);
+    CHECK_VALID(scanf("%d", &choice)==1 && choice>=0 && choice<=5,"Value must be one and in range 0 to 5!!");
+    if(choice==0)
+    {
+        *func_num = 0;
+    }
+    else
+    {
+        uint16_t num=0;
+        printf("Input chage value: ");
+        scanf("%hu",&num);
+        *((uint16_t*)&(Figure)+((uint16_t)choice-1)) = num;
+        *func_num = 6;
+    }
+}
+
+void (*func_arr[7])(int32_t,uint8_t*) = {topic_menu,attribute_menu,reputation_menu,ablity_menu,performance_menu,date_menu,figure_menu};
