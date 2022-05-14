@@ -45,3 +45,11 @@
 - 4 Game Cheater: Princess Maker 2
 - 5 Bonus: Wildcard
 > [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW4-QA)
+
+## Hw05
+- 1 Memory Monitor
+- 2 ID3 Editor
+- 3 Base64
+- 4 Taiwanese Learner
+- 5 Bonus: What’s Wrong
+> [Q&A](https://hackmd.io/@JacobLinCool/CP2-HW5-QA)

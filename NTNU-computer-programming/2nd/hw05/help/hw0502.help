@@ -1,0 +1,21 @@
+$ ./hw0502 -h
+usage: hw0502 -[tTaAycg] "value" file1 [file2...]
+       hw0502 -d file1 [file2...]
+       hw0502 -l file1 [file2...]
+       hw0502 -h
+-t Modifies a -T Modifies a Title tag Track tag
+-a Modifies an Artist tag -A Modifies an Album tag -y Modifies a Year tag
+-c Modifies a Comment tag -g Modifies a Genre tag -l Lists an ID3 tag
+-d Deletes an ID3 tag
+-h Displays this help info
+$ ./hw0502 -t "Four Seasons" four_seasons.mp3
+$ ./hw0502 -A "Vivaldi Collection" four_seasons.mp3 $ ./hw0502 -a "Neokent" four_seasons.mp3
+$ ./hw0502 -c "Good" four_seasons.mp3
+$ ./hw0502 -y "2022" four_seasons.mp3
+$ ./hw0502 -g "Classical" four_seasons.mp3
+$ ./hw0502 -l four_seasons.mp3 four_seasons.mp3:
+Title : Four Seasons Artist: Neokent
+Album : Vivaldi Collection
+Year: 2022
+Genre: Classical (32) Comment: Good
+Track: 0

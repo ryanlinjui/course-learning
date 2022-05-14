@@ -1,0 +1,6 @@
+$ ./hw0503 [options]
+    -e, --enc       Encode a file to a text file. 
+    -d, --dec       Decode a text file to a file. 
+    -o, --output    Output file name.
+$ ./hw0501 -e maldives.bmp -o maldives.txt 
+$ ./hw0501 -d maldives.txt -o maldives.bmp
