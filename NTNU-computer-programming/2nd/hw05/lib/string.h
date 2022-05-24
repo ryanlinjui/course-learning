@@ -5,8 +5,7 @@
 #define is_str_same(str1, str2) (!strcmp(str1, str2))
 
 //string copy
-#define str_copy(dest,str) ({ \
-    dest = realloc(dest,sizeof(char*)*(strlen(str)+1)); \
+#define str_copy_(dest,str) ({ \
     strncpy(dest,str,strlen(str)); \
     (dest)[strlen(str)] = 0; \
 })
@@ -35,7 +34,7 @@ void str_insert(char **str,char *insert_str,uint32_t index) //only support alloc
             i++;
         }
     }
-    str_copy(*str,new_str);
+    str_copy_(*str,new_str);
     free(new_str);
 }
 
@@ -109,7 +108,7 @@ void str_replace(char **str,char *target,char *new_word)
         }
     }
     
-    str_copy(*str,new_str);
+    str_copy_(*str,new_str);
     free(new_str);
 }
 
