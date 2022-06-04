@@ -286,30 +286,18 @@ void create_color_gradient(int32_t width, int32_t height,COLOR tl,COLOR tr,COLOR
         {   
             if(i<(uint32_t)(height/2)&& j<(uint32_t)(width/2))
             {
-                tl.red = (uint8_t)((double)(255-tl.red) * ((double)(j+1)/(double)width));
-                tl.green = (uint8_t)((double)(255-tl.green) * ((double)(j+1)/(double)width));
-                tl.blue = (uint8_t)((double)(255-tl.blue) * ((double)(j+1)/(double)width));
                 img.pixel[i][j] = tl;
             }
             else if(i<(uint32_t)(height/2)&& j>=(uint32_t)(width/2))
             {
-                tr.red = (uint8_t)((double)(255-tr.red) * ((double)(j+1)/(double)width));
-                tr.green = (uint8_t)((double)(255-tr.green) * ((double)(j+1)/(double)width));
-                tr.blue = (uint8_t)((double)(255-tr.blue) * ((double)(j+1)/(double)width));
                 img.pixel[i][j] = tr;
             }
             else if(i>=(uint32_t)(height/2)&& j<(uint32_t)(width/2))
             {
-                bl.red = (uint8_t)((double)(255-bl.red) * ((double)(j+1)/(double)width));
-                bl.green = (uint8_t)((double)(255-bl.green) * ((double)(j+1)/(double)width));
-                bl.blue = (uint8_t)((double)(255-bl.blue) * ((double)(j+1)/(double)width));
                 img.pixel[i][j] = bl;
             }
             else if(i>=(uint32_t)(height/2)&& j>=(uint32_t)(width/2))
             {
-                br.red = (uint8_t)((double)(255-bl.red) * ((double)(j+1)/(double)width));
-                br.green = (uint8_t)((double)(255-bl.green) * ((double)(j+1)/(double)width));
-                br.blue = (uint8_t)((double)(255-bl.blue) * ((double)(j+1)/(double)width));
                 img.pixel[i][j] = br;
             }
         }
