@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - run: cd 2nd/hw04; make
+      - run: cd 2nd/fin; make
