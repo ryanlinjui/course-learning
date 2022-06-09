@@ -1,0 +1,4 @@
+This is a visual cryptography program. 
+The image will acording to visual cryptography algorithms to change the result image.
+
+EXAMPLE: ./hw0401 [<filename>]
