@@ -1,0 +1,3 @@
+Total run tume = 0.000034 seconds.
+An optimal solution has 2 moves:
+3 2 
