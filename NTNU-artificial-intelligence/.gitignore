@@ -1,0 +1,12 @@
+# mac cache
+.DS_Store
+
+# poetry
+.venv
+poetry.lock
+
+# ipynb file
+.ipynb_checkpoints
+
+# vscode
+.vscode
