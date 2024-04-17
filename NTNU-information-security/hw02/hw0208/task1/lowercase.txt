@@ -1,0 +1,5 @@
+step 2: let us do some simplification to the original article. we convert all upper cases to lower cases,
+and then removed all the punctuations and numbers. we do keep the spaces between words, so you can
+still see the boundaries of the words in the ciphertext. in real encryption using monoalphabetic cipher,
+spaces will be removed. we keep the spaces to simplify the task. we did this using the following
+command:
