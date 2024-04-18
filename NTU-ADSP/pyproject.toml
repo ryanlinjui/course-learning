@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ntu-advanced-digital-signal-processing"
+version = "0.1.0"
+description = ""
+authors = ["ryanlinjui <ryanlinjui@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ntu_advanced_digital_signal_processing"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.26.4"
+matplotlib = "^3.8.3"
+scipy = "^1.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
