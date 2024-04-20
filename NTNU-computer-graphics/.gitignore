@@ -1,0 +1,8 @@
+# node
+node_modules
+
+# vite build
+dist
+
+# mac
+.DS_Store
