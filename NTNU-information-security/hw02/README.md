@@ -309,7 +309,6 @@ doffrnm
 
     cipher.bin:
     ```
-    �^ ����}V�ix'��Oy�0�#.����������9���5�����b`
     ```
 
     out.txt:
@@ -339,7 +338,6 @@ doffrnm
 
     cipher.bin:
     ```
-    H1�B����5'�A��F���o���4�טH�ф!u�H�[�K
     ```
 
     out.txt:
@@ -369,8 +367,6 @@ doffrnm
 
     cipher.bin:
     ```
-    ���W�Oθ��hy2
-    �c��&.\c)Q�o��D#�T�di�
     ```
 
     out.txt:
@@ -400,9 +396,6 @@ doffrnm
 
     cipher.bin:
     ```
-    ��3����`�
-    t�k+ݐ��U�.%�
-    �uC���&�/�.�B턗A�
     ```
 
     out.txt:
