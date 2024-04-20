@@ -24,11 +24,11 @@ $Calculate \space N:$
 
 $$N = \frac{2}{3}\frac{1}{\Delta_F}\log_{10}{\frac{1}{10\delta_1\delta_2}}$$
 
-$$N = \frac{2}{3}\frac{1}{0.05}\log_{10}{\frac{1}{10*0.01*0.01}}$$
+$$N = \frac{2}{3}\frac{1}{0.05}\log_{10}{\frac{1}{10 * 0.01 * 0.01}}$$
 
 $$N = \frac{2}{3}\frac{1}{0.05}\log_{10}{\frac{1}{0.001}}$$
 
-$$N = \frac{2}{3}\frac{1}{0.05}*3$$
+$$N = \frac{2}{3}\frac{1}{0.05} * 3$$
 
 $$N = 40$$
 
