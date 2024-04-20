@@ -285,7 +285,7 @@ doffrnm
 
 #### Task 2: Encryption using Different Ciphers and Modes
 
-在以下每個資料夾都生成一個 `plain.txt` 的檔案(內容隨意)
+在以下每個資料夾都生成一個 `plain.txt` 的檔案(內容隨意)，並使用 `hexdump -C cipher.bin` 查看 byte 數值
 
 - AES-128-CBC
     進入 `hw0208/task2/AES-128-CBC` 資料夾後，透過以下指令將 `plain.txt` 的內容透過 AES-128-CBC 進行加密:
@@ -309,6 +309,10 @@ doffrnm
 
     cipher.bin:
     ```
+    00000000  d5 5e 00 13 ff dd 0e c9  d1 7d 56 b5 69 78 08 1e  |.^.......}V.ix..|
+    00000010  27 f8 cc 4f 79 95 30 96  23 2e af 89 b4 a9 ff b9  |'..Oy.0.#.......|
+    00000020  95 90 f5 bc 39 f4 b7 df  35 94 85 e6 ed b9 62 60  |....9...5.....b`|
+    00000030
     ```
 
     out.txt:
@@ -338,6 +342,10 @@ doffrnm
 
     cipher.bin:
     ```
+    00000000  48 31 be 42 1c 90 e3 e6  08 9e 35 27 db 41 7f a7  |H1.B......5'.A..|
+    00000010  97 46 e4 83 11 19 80 a2  6f cd c9 11 9f 34 ba 04  |.F......o....4..|
+    00000020  0f d7 98 48 ec d1 84 07  21 75 9e 48 d9 5b cc 4b  |...H....!u.H.[.K|
+    00000030
     ```
 
     out.txt:
@@ -367,6 +375,10 @@ doffrnm
 
     cipher.bin:
     ```
+    00000000  c2 e8 ec 57 b8 4f ce b8  c0 f0 9f 68 06 79 32 0a  |...W.O.....h.y2.|
+    00000010  88 63 e2 11 ed 8d 26 2e  c2 82 5c 05 63 29 13 51  |.c....&...\.c).Q|
+    00000020  a9 6f e0 ea 44 23 fe 54  d0 64 69 e1              |.o..D#.T.di.|
+    0000002c
     ```
 
     out.txt:
@@ -396,6 +408,10 @@ doffrnm
 
     cipher.bin:
     ```
+    00000000  08 03 c7 c5 33 1d a1 a1  80 c3 60 e2 0d 74 e8 1c  |....3.....`..t..|
+    00000010  02 6b 2b dd 90 ff 9b 55  ea 2e 25 f4 0d 96 75 43  |.k+....U..%...uC|
+    00000020  c1 d1 c5 26 c4 2f bf 2e  bb 42 ed 84 97 41 8b 01  |...&./...B...A..|
+    00000030
     ```
 
     out.txt:
@@ -425,11 +441,13 @@ doffrnm
 
     結果如下:
 
-    pic_original.bmp:
-    <img src="./hw0208/task3/AES-128-ECB/pic_original.bmp" width="80%">
+    - pic_original.bmp:
+      
+        <img src="./hw0208/task3/AES-128-ECB/pic_original.bmp" width="80%">
 
-    new.bmp:
-    <img src="./hw0208/task3/AES-128-ECB/new.bmp" width="80%">
+    - new.bmp:
+      
+        <img src="./hw0208/task3/AES-128-ECB/new.bmp" width="80%">
 
 - AES-128-CBC
     進入 `hw0208/task3/AES-128-CBC` 資料夾後，透過以下指令將 `pic_original.bmp` 的內容透過 AES-128-CBC 進行加密:
@@ -445,14 +463,16 @@ doffrnm
     tail -c +55 p2.bmp > body
     cat header body > new.bmp
     ```
-
+    
     結果如下:
+    
+    - pic_original.bmp:
+      
+        <img src="./hw0208/task3/AES-128-CBC/pic_original.bmp" width="80%">
 
-    pic_original.bmp:
-    <img src="./hw0208/task3/AES-128-CBC/pic_original.bmp" width="80%">
-
-    new.bmp:
-    <img src="./hw0208/task3/AES-128-CBC/new.bmp" width="80%">
+    - new.bmp:
+      
+        <img src="./hw0208/task3/AES-128-CBC/new.bmp" width="80%">
 
 從以上結果可以看到，透過 ECB 和 CBC 進行加密後，再透過相同的金鑰和 IV 進行解密，可以得到原本的圖片。但是透過 ECB 進行加密後的圖片可以看到明顯的 pattern，而 CBC 進行加密後的圖片則沒有這樣的 pattern，因此 ECB 是不安全的，而 CBC 是安全的。
 
@@ -489,6 +509,7 @@ hexdump -C f3_d.txt
 ```
 
 結果如下:
+
 <img src="./hw0208/assets/task4-1.jpg" width="80%">
 
 #### Task 5: Error Propagation – Corrupted Cipher Text
@@ -641,6 +662,7 @@ hexdump -C f3_d.txt
 ```
 
 以下為實驗結果:
+
 <img src="./hw0208/assets/task6-3.jpg">
 
 #### Task 7: Programming using the Crypto Library
