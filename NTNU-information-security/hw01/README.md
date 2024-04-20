@@ -6,18 +6,18 @@
 
     已知：
 
-    $$H(X,Y)=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x,y)}$$
-    $$H(Y)=-\Sigma{_{y\in{Y}}}p(y)\log{p(y)}$$
-    $$H(X|Y)=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(y)p(x|y)\log{p(x|y)}$$
-    $$=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x|y)}$$
+    $$H(X,Y)=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x,y)}$$
+    $$H(Y)=-\Sigma{_ {y\in{Y}}}p(y)\log{p(y)}$$
+    $$H(X|Y)=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(y)p(x|y)\log{p(x|y)}$$
+    $$=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x|y)}$$
 
     將式子拆解後：
 
     $$H(Y)+H(X∣Y)$$
-    $$=-\Sigma{_{y\in{Y}}}p(y)\log{p(y)}-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x|y)}$$
-    $$=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)(\log{p(y)+\log{p(x|y)}})$$
-    $$=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{(p(y)*p(x|y))}$$
-    $$=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x,y)}$$
+    $$=-\Sigma{_ {y\in{Y}}}p(y)\log{p(y)}-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x|y)}$$
+    $$=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)(\log{p(y)+\log{p(x|y)}})$$
+    $$=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{(p(y)*p(x|y))}$$
+    $$=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x,y)}$$
     $$=H(X,Y)$$
 
     以此得證。
@@ -26,11 +26,11 @@
 
     已知：
 
-    $$H(X,Y)=-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x,y)}$$
+    $$H(X,Y)=-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x,y)}$$
 
-    $$H(X)=-\Sigma{_{x\in{X}}}p(x)\log{p(x)}$$
+    $$H(X)=-\Sigma{_ {x\in{X}}}p(x)\log{p(x)}$$
 
-    $$H(Y)=-\Sigma{_{y\in{Y}}}p(y)\log{p(y)}$$
+    $$H(Y)=-\Sigma{_ {y\in{Y}}}p(y)\log{p(y)}$$
 
     為了證明，利用對數不等式指出對於任何兩個非負數 $a$ 和 $b$ 有：
 
@@ -45,18 +45,18 @@
 
     如果對所有的 $x$ 和 $y$ 值求和，可以得到：
     
-    $$-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x,y)} \leq -\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{[p(x)p(y)]}$$
+    $$-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x,y)} \leq -\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{[p(x)p(y)]}$$
 
     其中右邊式子可以分解為：
     
-    $$-\Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(x)} - \Sigma{_{x\in{X}}}\Sigma{_{y\in{Y}}}p(x,y)\log{p(y)}$$
+    $$-\Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(x)} - \Sigma{_ {x\in{X}}}\Sigma{_ {y\in{Y}}}p(x,y)\log{p(y)}$$
 
     因為：
-    $$\Sigma{_{y\in{Y}}}p(x,y)=p(x)$$
-    $$\Sigma{_{x\in{X}}}p(x,y)=p(y)$$
+    $$\Sigma{_ {y\in{Y}}}p(x,y)=p(x)$$
+    $$\Sigma{_ {x\in{X}}}p(x,y)=p(y)$$
 
     以上式子可以簡化為：
-    $$-\Sigma{_{x\in{X}}}p(x)\log{p(x)} -\Sigma{_{y\in{Y}}}p(y)\log{p(y)}$$
+    $$-\Sigma{_ {x\in{X}}}p(x)\log{p(x)} -\Sigma{_ {y\in{Y}}}p(y)\log{p(y)}$$
 
     以此得證，等號成立的條件是 $X$ 和 $Y$ 是獨立的。
 
@@ -67,9 +67,9 @@ $$Pr[M=m∣C=c]=Pr[M=m]$$
 
 給定 $\mathcal{E}$ 是完善保密性的，有以下：
 
-1. 對於任何明文 $m$ 和任何密鑰 $k_2$，給定 $E(k_2,m)$ ，不會泄露關於 $m$ 的任何明文，因為 $\mathcal{E}$ 是完善保密性的。
-2. 使用 $k_1$ 和 $k_2$ 作為複合密鑰對 $E(k_2,m)$ 進行加密得到 $ E'((k_1,k_2),m) $ ，因為 $\mathcal{E}$ 是完善保密性的，$k_1$ 的選擇對攻擊者來說是獨立的，不能增加對 $m$ 的任何明文。
-3. 因此，$ E'((k_1,k_2),m) $ 作為 $m$ 的加密不會泄露 $m$ 的明文。
+1. 對於任何明文 $m$ 和任何密鑰 $k_2$ ，給定 $E(k_2,m)$ ，不會泄露關於 $m$ 的任何明文，因為 $\mathcal{E}$ 是完善保密性的。
+2. 使用 $k_1$ 和 $k_2$ 作為複合密鑰對 $E(k_2,m)$ 進行加密得到 $E'((k_1,k_2),m)$ ，因為 $\mathcal{E}$ 是完善保密性的， $k_1$ 的選擇對攻擊者來說是獨立的，不能增加對 $m$ 的任何明文。
+3. 因此， $E'((k_1,k_2),m)$ 作為 $m$ 的加密不會泄露 $m$ 的明文。
 
 為了證明 $Pr[M=m∣E'((k_1,k_2),m)=c']=Pr[M=m]$ 對所有 $m$ 和 $c'$ 成立：
 
@@ -98,7 +98,7 @@ $$Pr[M=m∣E'((k_1,k_2),m)=c']=Pr[M=m]$$
     - 將 $E(k,m)$ 的結果進行反轉，如果原本 $E$ 是語義安全的，那反轉其輸出不會影響安全性，因為攻擊者無法從反轉的密文中得知任何關於原始密文或明文的資訊。因此 $E_3$ 是語義安全的。
 
 - $E_4(k,m) := E(k,reverse(m))$
-    - 對明文 $m$ 進行反轉然後加密，不會改變 $E$ 的安全性質，因為不管 $m$ 的順序如何，$E$ 都是語義安全的，反轉明文只是一種明文的重新排列，不會給攻擊者提供任何額外的關於原始明文的資訊，所以 $E_4$ 語義安全的。
+    - 對明文 $m$ 進行反轉然後加密，不會改變 $E$ 的安全性質，因為不管 $m$ 的順序如何， $E$ 都是語義安全的，反轉明文只是一種明文的重新排列，不會給攻擊者提供任何額外的關於原始明文的資訊，所以 $E_4$ 語義安全的。
 
 ## 1.4 Malleability
 > by hw0104.py
@@ -110,7 +110,7 @@ key: 49913BF9711C1E74510611018BE35110495CCAA7
 
 滑動攻擊的原理是將一個密碼的加密過程與另一個密碼的加密過程相互“滑動”，使兩個過程相差一個回合。如果密碼的所有回合所使用的變換都是相同的，那麼可以通過對已知的密文進行分析，找到一個被稱為“滑動對”的明文與密文對。這種滑動對的特點是它們的一部分明文和密文在經過密碼的相同變換後是一致的。找到滑動對後，攻擊者可以使用這些對來試圖恢復出部分或全部的密鑰。
 
-例如，在對Feistel密碼進行滑動攻擊時，如果攻擊者能夠找到一對明文$P_i$和$P_j$，使得經過加密後的密文$C_i$和$C_j$滿足某些特定條件，則可以假設$P_i$和$C_j$之間的關係由相同的密鑰生成，從而透露了密鑰資訊。
+例如，在對Feistel密碼進行滑動攻擊時，如果攻擊者能夠找到一對明文 $P_i$ 和 $P_j$ ，使得經過加密後的密文 $C_i$ 和 $C_j$ 滿足某些特定條件，則可以假設 $P_i$ 和 $C_j$ 之間的關係由相同的密鑰生成，從而透露了密鑰資訊。
  
 滑動攻擊利用了密碼設計中的自相似性，以及某些情況下密鑰排程（key schedule）的弱點，特別是當密鑰排程導致了一個週期性的子密鑰序列時。它能夠對抗那些即使有很多回合也仍然依賴於密碼自身結構的簡單性的密碼系統。然而這種攻擊可以通過在迭代過程中添加迭代計數器或固定隨機常量來預防。對於更複雜的變體，其分析和防禦都更加困難。
 
