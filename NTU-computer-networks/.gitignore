@@ -1,0 +1,11 @@
+# vscode
+.vscode
+
+# python cache
+__pycache__
+
+# mac
+.DS_Store
+
+# phase 2 database
+*.db
