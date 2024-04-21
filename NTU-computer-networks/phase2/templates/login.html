@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phase 2</title>
+</head>
+<body>
+    <h1>Login Page</h1>
+    <form id="login-form">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="login">
+    </form><br><br>
+    <script>
+        var form = document.getElementById("login-form");
+        form.onsubmit = function(event)
+        {
+            var xhr = new XMLHttpRequest();
+            const data = new URLSearchParams(new FormData(form)).toString()
+            xhr.open("POST","/auth/login")
+            xhr.send(data);
+            xhr.onreadystatechange = function() 
+            {
+                if (xhr.readyState == XMLHttpRequest.DONE) 
+                {   
+                    var response = this.responseText; 
+                    if (response=="true")
+                    {
+                        location.href="/"
+                    }
+                    else
+                    {
+                        alert("Error username or password")
+                    }
+                }
+            }
+            return false; //Dont submit the form.
+        }
+    </script>
+
+    <a href="/register">Register Page</a>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Phase 2</title>
+  </head>
+  <body>
+    <h1 id="welcome-msg">Welcome</h1>
+
+    <h3>Audio Demo</h3>
+    <audio src="/source.mp3" controls=""></audio>
+
+    <h3>Video Demo</h3>
+    <video src="/source.mp4" controls=""></video>
+
+    <form>
+      <h2>Message board:</h2>
+      <textarea name="message"></textarea><br>
+      <input type="submit" value="Submit">
+    </form>
+
+    <h2>Comment:</h2>
+    <ul id="messages"></ul>
+
+    <script>
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET","/agent");
+      xhr.send("agent");
+      var username = "aa"; 
+      xhr.onreadystatechange = function() 
+      {
+          if (xhr.readyState == XMLHttpRequest.DONE) 
+          {   
+            var response = this.responseText; 
+            if (response=="false")
+            { 
+              alert("You haven't login yet");
+              location.href="/login";
+            }
+            else
+            {
+              document.getElementById("wecome-msg").textContent="Welcome"+response;   
+              username = response;
+            }
+          }
+      }
+
+      xhr.open("GET","/comment.json")
+      xhr.send("comment.json");
+      var data;
+      xhr.onreadystatechange = function() 
+      { 
+        if (xhr.readyState == XMLHttpRequest.DONE) 
+        {
+          data = this.responseText;
+          var comment=data.split(",");
+          for (var i = 0;i<comment.length-1;i++)
+          {
+            user = comment[i].split(":")[0]
+            msg = comment[i].split(":")[1]
+            if(user[0] == "" || msg[0] == "") continue;
+            const li = document.createElement('li');
+            li.innerHTML = user + ": " + msg;
+            messagesList.appendChild(li);
+          }
+        }
+      }
+      // Get a reference to the form and the messages list
+      const form = document.querySelector('form');
+      const messagesList = document.querySelector('#messages');
+
+      // Add a submit event listener to the form
+      form.addEventListener('submit', e => {
+        // Prevent the default form submission behavior
+        e.preventDefault();
+
+        // Get the value of the message from the form
+        const message = e.target.elements.message.value;
+        if(message.length==0 || message[0] == " ") return;
+
+        xhr.open("POST","/comment")
+        xhr.send(username+'&'+message);
+        xhr.onreadystatechange = function() 
+        {
+            if (xhr.readyState == XMLHttpRequest.DONE) 
+            {   
+                // Add the message to the messages list
+
+                const li = document.createElement('li');
+                li.innerHTML = username + ': ' +message;
+                messagesList.appendChild(li);
+
+                // Clear the form
+                e.target.elements.message.value = '';
+            }
+        }
+        return false;
+      });
+    </script>
+  </body>
+</html>
