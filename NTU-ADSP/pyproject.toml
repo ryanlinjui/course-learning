@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "ntu-advanced-digital-signal-processing"
+name = "ntu-adsp"
 version = "0.1.0"
 description = ""
 authors = ["ryanlinjui <ryanlinjui@gmail.com>"]
 readme = "README.md"
-packages = [{include = "ntu_advanced_digital_signal_processing"}]
+packages = [{include = "ntu-adsp"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
