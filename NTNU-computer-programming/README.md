@@ -8,8 +8,8 @@ Instructor: Po-Wen Chi
 
 ## Link To Source Code
 
-- [Computer Programming I](https://github.com/rrr20020910/NTNU-computer-programming/blob/main/1st)
+- [Computer Programming I](./1st)
 
-- [Computer Programming II](https://github.com/rrr20020910/NTNU-computer-programming/blob/main/2nd)
+- [Computer Programming II](./2nd)
 
 > Special Thanks: JacobLinCool's Incredible Note
