@@ -1,0 +1,6 @@
+Usage:
+    ./fin01 [options]
+        -w: the width of the output figure. (Default: 1024) 
+        -h: the height of the output figure. (Default: 768) 
+        -o: the output file name. (Default: output.bmp) 
+        --help: this message

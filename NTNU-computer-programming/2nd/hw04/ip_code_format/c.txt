@@ -1,0 +1,30 @@
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct _s[struct_name]
+{
+[ip_format]
+}[struct_name];
+
+[struct_name] *[(lower)struct_name]_init(void)
+{
+    return ([struct_name]*)malloc(sizeof([struct_name]*));
+}
+
+void [(lower)struct_name]_free([struct_name]* s_ptr)
+{
+    free(s_ptr);
+}
+
+int [(lower)struct_name]_encode(void *ptr,const [struct_name]* s_ptr)
+{
+    memcpy(ptr,s_ptr,sizeof([struct_name]));
+    return 0;
+}
+
+int [(lower)struct_name]_decode(const void *ptr, [struct_name]* s_ptr)
+{
+    memcpy(s_ptr,ptr,sizeof([struct_name]));
+    return 0;
+}

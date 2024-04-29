@@ -1,0 +1,6 @@
+fin02:
+    -c, --country: the country name. default: Taiwan
+    -s, --start MM-DD-YYYY: the start date. default: 01-02-2020.
+    -e, --end MM-DD-YYYY: the end date. default: 12-31-2021. 
+    -o, --output: output file name. default: output.csv 
+    --help: This description

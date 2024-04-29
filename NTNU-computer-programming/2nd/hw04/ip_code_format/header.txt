@@ -1,0 +1,13 @@
+#pragma once
+
+#include <stdint.h>
+
+typedef struct _s[struct_name]
+{
+[ip_format]
+}[struct_name];
+
+[struct_name] *[(lower)struct_name]_init(void);
+void [(lower)struct_name]_free([struct_name]*);
+int [(lower)struct_name]_encode(void *,const [struct_name]*);
+int [(lower)struct_name]_decode(const void *, [struct_name]*);
