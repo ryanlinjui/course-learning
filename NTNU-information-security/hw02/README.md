@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/Name-林昕鋭-blue?logo=bitcoin)
 ![](https://img.shields.io/badge/ID-41047035S-blue?logo=bitcoin)
 
-## 1.1 Triple Encryption
+## 2.1 Triple Encryption
 攻擊者尋找單一金鑰 $k'$ 來等效於三個金鑰 $k_1, k_2, k_3$ 的情況下，使得:
 
 $$Enc(k_3,Enc(k_2,Enc(k_1,x))) = Enc(k',x)$$
@@ -16,7 +16,7 @@ $$2^{56} \times 2^{56} \times 2^{56} = 2^{168}$$
 
 因為 $k'$ 模擬出所有可能的 $k_1, k_2, k_3$ 組合的加密結果是需要在 $2^{168}$ 進行搜索，所以模擬的機率仍然是微乎其微的(negligible)。
 
-## 1.2 Hybrid Chosen-Plaintext-Attack Construction
+## 2.2 Hybrid Chosen-Plaintext-Attack Construction
 混合密碼系統 $(E,D)$ 通過結合兩個加密系統形成，如以下流程:
 
 1. 透過 $E$ 加密後隨機選擇一個從 $k_0$ 到 $K_0$ 的金鑰集合中，利用 $k$ 和 $k_0$ 透過 $E_1$ 來加密得到 $c_1$，再利用 $k_0$ 透過 $E_0$ 加密明文 $m$ 得到 $c_0$ ，最後輸出  $(c_0, c_1)$ 。
@@ -34,7 +34,7 @@ $E_0$ 保護了明文 $m$ 的安全性，即使 $k_0$ 是已知的。
 
 得出:混合密碼系統 $(E,D)$ 是 CPA 安全的。
 
-## 1.3 The malleability of CBC mode
+## 2.3 The malleability of CBC mode
 
 利用 CBC 加密模式的易變性 (malleability)，流程如下:
 
@@ -48,7 +48,7 @@ $E_0$ 保護了明文 $m$ 的安全性，即使 $k_0$ 是已知的。
 
 CBC 模式的易變性使得攻擊者可以修改密文中的某些位元，從而影響解密後的明文，這種攻擊方式被稱為密文塊翻轉攻擊 (Ciphertext Block Flipping Attack)，攻擊者可以利用這種方式來修改密文中的某些位元，從而影響解密後的明文，進而達到破壞加密系統的目的。
 
-## 1.4 Modular Multiplicative Inverse
+## 2.4 Modular Multiplicative Inverse
 > by hw0204.py
 
 1. 400 mod 997
@@ -75,7 +75,7 @@ CBC 模式的易變性使得攻擊者可以修改密文中的某些位元，從�
     因此得出:
     $$x = 8643$$
 
-## 1.5 Euler’s Theorem and RSA
+## 2.5 Euler’s Theorem and RSA
 在 RSA 加密演算法中，選取兩個大的質數 $p$ 和 $q$ ，計算 $N = pq$ ，並找到一個與 $\varphi(N)$ (歐拉函數) 互質的整數 $e$ ，計算出解密金鑰 $d$ 使得:
 
 $$ed \equiv 1 \pmod{\varphi(N)}$$
@@ -107,7 +107,7 @@ $$m^{ed} \equiv m \pmod{N}$$
 
 在RSA的運作中，$m$ 被加密和解密的過程實際上是在模 $N$ 的乘法群上運作，這個群的所有元素都可以表示為一個整數的次方，因為 $m$ 是群的一個元素，$m$ 的次方運算與群的運算是封閉的，並且 $d$ 的選擇保證了 $m^{ed} \equiv m \pmod{N}$ 對所有 $m$ 成立，所以即使 $m$ 和 $N$ 不互質，RSA 的逆置換 (reverse permutation) 仍然可以 work，因為 RSA 演算法的基底不只是依賴於歐拉定理，而是依賴於模 $N$ 的乘法群的結構，以及 $ed$ 與 $\lambda(N)$ 或 $\varphi(N)$ 的關係。
 
-## 1.6 Pseudo Prime
+## 2.6 Pseudo Prime
 偽質數 (pseudo primes) 在某些數學測試中表現得像一個質數，像是費馬小定理說到對於任何質數 $p$ 和任何不是 $p$ 的倍數的整數 $a$ ，下式成立:
 
 $$a^{p-1} \equiv 1 \pmod{p}$$
@@ -130,7 +130,7 @@ $$a^{p-1} \equiv 1 \pmod{p}$$
 因此即使在 $p$ 和 $q$ 是偽質數的情況下，只要是足夠大且難分解的偽質數，RSA算法還是可以正確運算。
 <!-- 實際上，在很多實際應用中，偽質數因為其效率而被廣泛使用，而且當它們選擇得當時，不會對RSA算法的安全性或正確性構成風險。 -->
 
-## 1.7 Elliptic Curve over $\mathbb{Z}_p$ 
+## 2.7 Elliptic Curve over $\mathbb{Z}_p$ 
 根據 $P$ 和 $Q$ 是否相同來計算斜率 $\lambda$ :
 
 - 如果 $P \neq Q$ ，斜率 $\lambda$ 是通過 $P$ 兩點畫直線得到的，根據公式可以知道，分母 $x_q-x_p$ 必須在模 $p$ 的情況下有模逆元，也就是 $x_q-x_p$ 和 $p$ 互質才能計算出 $\lambda$ 的值。
@@ -141,7 +141,7 @@ $$a^{p-1} \equiv 1 \pmod{p}$$
 
 加法過程是在模 $p$ 的情況下進行的，也就是說所有計算都是在有限域 $\mathbb{Z}_p$ 中進行，其中 $p$ 是一個質數，在橢圓曲線上進行加法運算時，如果直線與曲線的交點不止一個，就得取其中一個作為結果的相反數，這加法定義讓橢圓曲線上的點形成阿貝爾群 (Abelian group)。
 
-## 1.8 Lab: Secret-Key Encryption
+## 2.8 Lab: Secret-Key Encryption
 
 #### Task 1: Frequency Analysis
 - 步驟一
@@ -696,7 +696,7 @@ Syracuse
 2. 對每個字詞進行 padding，並且透過 CBC 模式進行加密
 3. 對比加密後的結果與 ciphertext 是否相同，如果相同則找到 key
 
-## 1.9 Lab: Padding Oracle Attack
+## 2.9 Lab: Padding Oracle Attack
 
 #### Task 1: Getting Familiar with Padding
 
