@@ -1,0 +1,19 @@
+(1) 25
+(2) 10
+(3) 5
+(4) 0
+未作答
+(5) 10
+(6) 7
+(a) (ii)(iv)
+(b) (v)(vi)
+(7) 6
+(b) (i) It can avoid the problem where the denominator becomes zero. (ii) The parameters for different have not to be determined precisely in prior.
+(8) 10
+(a)
+log2, n = 0
+-(1+j)ⁿ/2ⁿn - (1-j)ⁿ/2ⁿn + 0.8ⁿ/n + (-0.5)ⁿ/n, n > 0
+(-½)⁻ⁿ/n, n < 0
+(b) Hₘᵢₙᵢ ₚₕₐₛₑ(z) = (2 - z⁻¹ + 0.5z⁻³) / (1 - 0.3z⁻¹ - 0.4z⁻²)
+(bonus) 0
+300000
