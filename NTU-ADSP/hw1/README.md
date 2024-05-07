@@ -5,7 +5,7 @@
 
 ([0306_1-00:00](https://cool.ntu.edu.tw/courses/34012/modules/items/1475298))  
 
-1. By main.py (page 58 ~ 61) ([0313_2-01:38](https://cool.ntu.edu.tw/courses/34012/modules/items/1483742))
+1. By main.py (page 58 ~ 61, 71) ([0313_2-01:38](https://cool.ntu.edu.tw/courses/34012/modules/items/1483742))
 
 2. (page 31) ([0221_3-09:05](https://cool.ntu.edu.tw/courses/34012/modules/items/1452266))  
     $Let:$

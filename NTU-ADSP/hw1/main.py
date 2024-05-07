@@ -1,62 +1,89 @@
+# fix version
+
 import numpy as np
 from math import (
     cos, pi, e
 )
 import matplotlib.pyplot as plt
 
-def generate_random_array(n, start1, end1, start2, end2):
-    if n % 2 == 0:
-        array1 = np.random.uniform(start1+0.01, end1-0.01,  int(n / 2))
-        i_array1 = np.ones(int(n / 2))
-        array2 = np.random.uniform(start2+0.01, end2-0.01, int(n / 2))
-        i_array2 = np.zeros(int(n / 2))
+filter_length = 17
+sampling_frequency = 6000
+
+# Normalize 0 ~ 6000 to 0 ~ 1
+# => but is to be 0 ~ 0.5
+pass_band = [0, 1200/sampling_frequency]
+transition_band = [1200/sampling_frequency, 1500/sampling_frequency]
+stop_band = [1500/sampling_frequency, 0.5]
+
+pass_wf = 1
+stop_wf = 0.6
+
+delta = 0.0001
+
+def H_d(x: float):
+    if pass_band[0] <= x <= pass_band[1]:
+        return 1
     else:
-        array1 = np.random.uniform(start1+0.01, end1-0.01,  int(n / 2))
-        i_array1 = np.ones(int(n / 2))
-        array2 = np.random.uniform(start2+0.01, end2-0.01, int(n / 2) + 1)
-        i_array2 = np.zero(int(n / 2) + 1)
+        return 0
 
-    combined_array = np.concatenate((array1, array2))
+def weight(x: float):
+    if pass_band[0] <= x <= pass_band[1]:
+        return pass_wf
+    elif stop_band[0] <= x <= stop_band[1]:
+        return stop_wf
+    else:
+        return 0
+
+def R_F(F: float, S_m: np.ndarray):
+    ans = 0
+    for n in range(int((filter_length - 1) / 2) + 1):
+        ans += S_m[n] * cos(2 * pi * n * F)
+    return ans
+
+def err(F: float, S_m: np.ndarray):
+    return (R_F(F, S_m) - H_d(F)) * weight(F)
+
+def generate_random_array(n: int, start1: float, end1: float, start2: float, end2: float) -> np.ndarray:
+    unique_values = set()
+    while len(unique_values) < n:
+        
+        new_value1 = np.round(np.random.uniform(start1, end1), 2)
+        if new_value1 not in unique_values:
+            unique_values.add(new_value1)
+
+        if len(unique_values) < n:
+            new_value2 = np.round(np.random.uniform(start2, end2), 2)
+            if new_value2 not in unique_values:
+                unique_values.add(new_value2)
+
+    combined_array = np.array(list(unique_values))
     combined_array.sort()
-    ideal_array =  np.concatenate((i_array1, i_array2))
-    ideal_array.sort()
 
-    return np.round(combined_array, 2), np.round(ideal_array, 2)
+    return combined_array
 
 def MinimaxLowpassFIRfilter():
-    
-    filter_length = 17
-    sampling_frequency = 6000
-
-    # Normalize 0 ~ 6000 to 0 ~ 1
-    # => but is to be 0 ~ 0.5
-    pass_band = [0, 1200/sampling_frequency]
-    transition_band = [1200/sampling_frequency, 1500/sampling_frequency]
-    stop_band = [1500/sampling_frequency, 0.5]
-    
-
-    pass_wf = 1
-    stop_wf = 0.6
-
-    delta = 0.0001
     
     # step 1
     k = int((filter_length - 1) / 2)
     extreme_point_num = k + 2
-    fn, ideal = generate_random_array(k + 2, pass_band[0], pass_band[1], stop_band[0], stop_band[1])
+    fn = generate_random_array(k + 2, pass_band[0], pass_band[1], stop_band[0], stop_band[1])
+    
     print("passband:", pass_band)
     print("stopband:", stop_band)
     print("transition band:", transition_band)
     print("fn:", fn)
-    print("ideal:", ideal)
+    print("======== Start Iteration ========")
 
     # iteration
     A_m = np.zeros((k + 2, k + 2))
     S_m = np.zeros((k + 1, 1))
-    H_m = ideal
+    
     e_list = [0, 1e9]
 
     iteration_count = 0
+    
+    current_max_error = 1e9
+    
     while True:
         iteration_count += 1
         print(f"Iteration: {iteration_count}")
@@ -66,89 +93,83 @@ def MinimaxLowpassFIRfilter():
             for n in range(k + 1):
                 A_m[m][n] = cos(2 * pi * fn[m] * n)
             
-            # for n last k
-            if fn[m] >= pass_band[0] and fn[m] <= pass_band[1]:
-                A_m[m][-1] = ((-1) ** m) / (pass_wf ** fn[m])
-            elif fn[m] >= stop_band[0] and fn[m] <= stop_band[1]:
-                A_m[m][-1] = ((-1) ** m) / (stop_wf * fn[m])
-            else:
-                raise ValueError("transition band error")  # Fix the typo in the raise statement
+            # for loop n the last k
+            A_m[m][-1] = (-1) ** m / weight(fn[m])
 
-        # R(F) caculation
-        S_m = np.matmul(np.linalg.inv(A_m), H_m)   
-        R_f = np.zeros(len(fn))
-        for i in range(len(fn)):
-            for s in S_m:
-                R_f[i] += (s * cos(2 * pi * fn[i] * i))
+        H_m = []
+        for i in range(k + 2):
+            H_m.append(H_d(fn[i]))
+
+        H_m = np.array(H_m)
+        S_m = np.matmul(np.linalg.inv(A_m), H_m)
         
-        # step 3
-        # err(F) caculation
-        err_f = np.zeros(k+2)
-        for i in range(k+2):
-            err_f[i] = R_f[i] - H_m[i]
-
-            if fn[i] >= pass_band[0] and fn[i] <= pass_band[1]:
-                err_f[i] *= pass_wf
-            elif fn[i] >= stop_band[0] and fn[i] <= stop_band[1]:
-                err_f[i] *= stop_wf
+        # step 3 and 4
+        new_extreme = []
+        max_error = -1
+        previous_error = None
+        current_error = None
+        for i in range(int(0.5 / delta) + 2):
+            if i == 0:
+                continue
+            if i == 1:
+                previous_error = 0
+                current_error = err(0 * delta, S_m)
+            if i == int(0.5 / delta) + 1:
+                frequency = 0
             else:
-                raise ValueError("transition band error 2")
+                frequency = err(i * delta, S_m)
 
-        # # step 4
-        # extreme_points = []
-        # max_error = -1
-        # previous_error = None
-        # current_error = None
-        # for i in range(int(0.5 / sampling_frequency) + 2):
-        #     if i == 0:
-        #         continue
-        #     if i == 1:
-        #         previous_error = 0
-        #         current_error = err_f[0]
-        #     if i == int(0.5 / sampling_frequency) + 1:
-        #         frequency = 0
-        #     else:
-        #         frequency = err_f[i]
+            if (
+                current_error - frequency > 0 and current_error - previous_error > 0 or
+                current_error - frequency < 0 and current_error - previous_error < 0
+            ):
+                new_extreme.append((i - 1) * delta)
+                if max_error < abs(current_error):
+                    max_error = abs(current_error)
 
-        #     if (
-        #         current_error - frequency > 0
-        #         and current_error - previous_error > 0
-        #         or current_error - frequency < 0
-        #         and current_error - previous_error < 0
-        #     ):
-        #         extreme_points.append((i - 1) * sampling_frequency)
-                
-        #         if max_error < abs(current_error):
-        #             max_error = abs(current_error)
+            previous_error = current_error
+            current_error = frequency
 
-        #     previous_error = current_error
-        #     current_error = frequency
-    
+        # Show (c) the maximal error for each iteration
+        print(f"Maximal error: {max_error}")
+
         # step 5
-        e_list[0] = np.max(np.abs(err_f))
-        print(f"maximal error: {e_list[0]}")
-        print(f"error matrix:\n{err_f}")
-
-        # case A
-        if e_list[1] - e_list[0] > delta or e_list[1] - e_list[0] < 0:
-            e_list[0], e_list[1] = e_list[1], e_list[0]
-            fn = err_f.copy()
+        if 0 <= current_max_error - max_error <= delta:
+            # case b
+            break
         
-        # case B
-        if 0 <= e_list[1] - e_list[0] and e_list[1] - e_list[0] <= delta:
-           pass
+        # case a
+        current_max_error = max_error
+        fn = new_extreme[: k + 2]
+
+    # step 6
+    h = []
+    for i in range(filter_length):
+        if i < k:
+            h.append(S_m[k-i]/2)
+        elif i == k:
+            h.append(S_m[0])
         else:
-            raise ValueError("case error")  # Fix the typo in the raise statement
+            h.append(S_m[i-k]/2)
+    
+    # Show (a) the frequency response
+    frequency_response = []
+    for i in range(int(0.5 / delta) + 1):
+        frequency_response.append(R_F(i * delta, S_m))
 
-        # step 6
-        h = np.zeros(filter_length)
-        h[k] = S_m[0]
-        for i in range(1, len(S_m)):
-            h[k - i] = S_m[i] / 2
-            h[k + i] = S_m[i] / 2
-        
-        print(f"the impulse response h[n]:\n{h}") 
-        break
+    plt.plot([i * delta for i in range(int(0.5 / delta) + 1)], frequency_response)
+    plt.plot([i * delta for i in range(int(0.5 / delta) + 1)], [H_d(i * delta) for i in range(int(0.5 / delta) + 1)])
+    plt.xlabel("Frequency")
+    plt.ylabel("Amplitude")
+    plt.title("Frequency Response")
+    plt.show()
 
+    # Show (b) the impulse response h[n]
+    plt.stem([i for i in range(filter_length)], h)
+    plt.xlabel("n")
+    plt.ylabel("h[n]")
+    plt.title("Impulse Response")
+    plt.show()
+    
 if __name__ == "__main__":
     MinimaxLowpassFIRfilter()
