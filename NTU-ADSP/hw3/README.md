@@ -9,7 +9,7 @@
 #### 2. (page 204) ([0410-16:14](https://cool.ntu.edu.tw/courses/34012/modules/items/1509398))
 
 - (1) Always real.
-- (2) $ \Sigma |X[k]|^2 B_m[k]$ has much less probability to be 0.
+- (2) $\Sigma |X[k]|^2 B_m[k]$ has much less probability to be 0.
 - (3) The cutoff frequencies of windows match the characteristics of hearing.
 - (4) DCT (Discrete Cosine Transform) is applied of the IFT (Inverse Fourier Transform).
     
@@ -49,10 +49,10 @@ $$L_{La} = \frac{340}{2 \times 420} \approx 0.4048m$$
 
 ##### (a)
 
-- (1) More concentration at the frequencies $f_o, 2f_o, 3f_o......$.
+- (1) More concentration at the frequencies $f_o, 2f_o, 3f_o \text{......}$.
 - (2) For each note, the frequency is fixed.
 - (3) Fundamental frequenies are $f_o \times 2^{{\frac{k}{12}}}$.
-- (4) Beats, intervals are $T \times 2^k , k = -1, 0, 1, 2, ......$.
+- (4) Beats, intervals are $T \times 2^k , k = -1, 0, 1, 2 \text{......}$.
 - (5) Reapeated melody.
 
 ##### (b)
