@@ -13,7 +13,10 @@
 - (3) The cutoff frequencies of windows match the characteristics of hearing.
 - (4) DCT (Discrete Cosine Transform) is applied of the IFT (Inverse Fourier Transform).
     
-#### 3. (page ) ([]())
+#### 3. (page 183 ~ 186) ([0417-1-03:48](https://cool.ntu.edu.tw/courses/34012/modules/items/1515787))
+可以從 $\hat{x}[n]$ 的定義出發來尋找 $x[n]$，從倒頻譜 $\hat{x}[2]=1$ 和其他情況下 $\hat{x}[n]=0$，可以猜測原始的 $x[n]$ 應該是一個在 $z$ 領域有特定性質的序列，$x[n]$ 的 $z$ 變換 $X(z)$ 可能是形式為 $z^{-2}$ 的單個項，代表 $x[n]$ 是一個在 $n=2$ 時有單位冲擊的序列。
+
+如果 $X(z) = z^{-2}$，則 $x[n]$ 的時間域表示為 $x[n] = \delta[n-2]$。這種信號在 $n=2$ 時有一個單位冲擊，其他時間點的值為零。
 
 #### 4. (page 239 ~ 241) ([0410-2-35:52](https://cool.ntu.edu.tw/courses/34012/modules/items/1509399))
 
@@ -86,8 +89,19 @@ $$f = \frac{20000 \pi}{2 \pi} = 10000 Hz$$
 
 因爲人類耳朵最敏感的頻率約為 $3000 Hz$ ，也是 lower bound for hearing curve 的最低點，因此根據 (a)，可以得知 most suitable to sound is (ii) $sin(5400 \pi t)$
 
-#### 7. (page ) ([]())
-  
+#### 7.
+
+##### (a) (page 292)
+- (1) Independent of the input.
+- (2) Near optimal.
+- (3) Real output.
+
+##### (b) (page 295) ([0501-2-03:17](https://cool.ntu.edu.tw/courses/34012/modules/items/1530818))
+
+- (1) The characteristics of an image vary with the location.
+- (2) The memory requirement is reduced.
+- (3) Low complexity $\Theta(MN \log MN) \xrightarrow{\text{reduce}} \Theta(MN)$.
+
 #### 8. (page 313 ~ 314) ([0417-2-35:14](https://cool.ntu.edu.tw/courses/34012/modules/items/1515788))
 
 ##### (a)
@@ -122,7 +136,7 @@ graph TD;
 
 ##### (c)
 
-$$\frac{entropy_x}{\ln 2} = \frac{1.2875}{\ln 2} \approx 1.85$$
+$$1 \times 0.45 + 2 \times 0.3 + 3 \times 0.16 + 4 \times (0.06 + 0.03) = 1.89bits$$
 
 #### 9. (Extra Question, number 0, 5) (page 237) ([0417-1-11:33](https://cool.ntu.edu.tw/courses/34012/modules/items/1515787))
 
