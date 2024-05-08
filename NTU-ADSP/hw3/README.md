@@ -4,7 +4,7 @@
 
 ### 作業說明 ([0417-1-00:00](https://cool.ntu.edu.tw/courses/34012/modules/items/1515787))
 
-#### 1. By main.py (page ) ([]())
+#### 1. By main.py (page 284) ([0501-1-05:19](https://cool.ntu.edu.tw/courses/34012/modules/items/1530817))
 
 #### 2. (page 204) ([0410-16:14](https://cool.ntu.edu.tw/courses/34012/modules/items/1509398))
 
