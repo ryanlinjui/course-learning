@@ -43,8 +43,8 @@
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=111&term=2&courseCode=CSU0018&courseGroup=A&deptCode=SU47&formS=2&classes1=&deptGroup=)
  
 - NTNU CSU0034 資料庫理論 Database Theories
-[![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=111&term=2&courseCode=CSU0034&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
 [![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/JacobLinCool/Privy-Council)
+[![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=111&term=2&courseCode=CSU0034&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
 
 - NTNU CSU0042 人工智慧 Artificial Intelligence
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-artificial-intelligence)
@@ -62,7 +62,7 @@
 
 ## 110-2 (2022 Spring)
 
-- NTNU CSU0002 程式設計（一）Computer Programming (II)
+- NTNU CSU0002 程式設計（二）Computer Programming (II)
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-computer-programming)
 [![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/ryanlinjui/bang)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=110&term=2&courseCode=CSU0002&courseGroup=A&deptCode=SU47&formS=1&classes1=&deptGroup=)
