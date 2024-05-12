@@ -26,6 +26,13 @@ function initArrayBufferForLaterUse(gl:WebGL2RenderingContext, data:Float32Array
     return Object.assign(buffer, {num, type})
 }
 
+type Type = ReturnType<typeof initArrayBufferForLaterUse>;
+export interface Interface {
+    vertexBuffer: Type
+    colorBuffer: Type,
+    numVertices: number
+}
+
 export function initVertexBufferForLaterUse(gl:WebGL2RenderingContext, vertices:number[], colors:number[])
 {
     const nVertices = vertices.length / 3;
@@ -177,10 +184,83 @@ export function initFrameBuffer(gl:WebGL2RenderingContext, offScreenWidth:number
     return Object.assign(frameBuffer, {texture, depthBuffer});
 }
 
+export function initCubeTexture(
+    gl:WebGL2RenderingContext,
+    posXName: string, negXName: string,
+    posYName: string, negYName: string,
+    posZName: string, negZName: string,
+    imgWidth: number, imgHeight: number
+) 
+{
+    if (gl == null) 
+    {
+        throw new Error("gl is null");
+    }
 
-type Type = ReturnType<typeof initArrayBufferForLaterUse>;
-export interface Interface {
-    vertexBuffer: Type
-    colorBuffer: Type,
-    numVertices: number
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+
+    const faceInfos = [
+        {
+            target: gl.TEXTURE_CUBE_MAP_POSITIVE_X,
+            fName: posXName,
+        },
+        {
+            target: gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
+            fName: negXName,
+        },
+        {
+            target: gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
+            fName: posYName,
+        },
+        {
+            target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Y,
+            fName: negYName,
+        },
+        {
+            target: gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
+            fName: posZName,
+        },
+        {
+            target: gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
+            fName: negZName,
+        },
+    ];
+    faceInfos.forEach((faceInfo) => {
+        const { target, fName } = faceInfo;
+        // setup each face so it's immediately renderable
+        if (gl == null) 
+        {
+            throw new Error("gl is null");
+        }
+        gl.texImage2D(
+            target, 0, gl.RGBA,
+            imgWidth, imgHeight,
+            0, gl.RGBA, gl.UNSIGNED_BYTE, null
+        );
+
+        const image = new Image();
+        image.onload = function () 
+        {
+            if (gl == null) 
+            {
+                throw new Error("gl is null");
+            }
+
+            gl.bindTexture(gl.TEXTURE_CUBE_MAP, texture);
+            gl.texImage2D(target, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+            gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+        };
+        image.src = fName;
+    });
+
+    gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
+
+    gl.texParameteri(
+        gl.TEXTURE_CUBE_MAP,
+        gl.TEXTURE_MIN_FILTER,
+        gl.LINEAR_MIPMAP_LINEAR
+    );
+
+    return texture;
 }
