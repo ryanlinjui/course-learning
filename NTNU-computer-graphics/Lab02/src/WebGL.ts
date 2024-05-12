@@ -1,6 +1,6 @@
 import {
     compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 const VSHADER_SOURCE = `
     attribute vec4 a_Position;
@@ -23,7 +23,6 @@ const FSHADER_SOURCE = `
 `;
 
 main();
-
 function main()
 {
     const canvas = document.getElementById('webgl') as HTMLCanvasElement | null;

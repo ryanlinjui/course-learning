@@ -1,27 +1,26 @@
 import {
     compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 const VSHADER_SOURCE = `
-        uniform vec4 u_Position;
-        void main()
-        {
-            gl_Position = u_Position;
-            gl_PointSize = 10.0;
-        }    
-    `;
+    uniform vec4 u_Position;
+    void main()
+    {
+        gl_Position = u_Position;
+        gl_PointSize = 10.0;
+    }
+`;
 
 const FSHADER_SOURCE = `
-        precision mediump float;
-        uniform vec4 u_FragColor;
-        void main()
-        {
-            gl_FragColor = u_FragColor;
-        }
-    `;
+    precision mediump float;
+    uniform vec4 u_FragColor;
+    void main()
+    {
+        gl_FragColor = u_FragColor;
+    }
+`;
 
 main();
-
 function main()
 {
     const canvas = document.getElementById('webgl') as HTMLCanvasElement | null;

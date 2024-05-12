@@ -1,20 +1,20 @@
 import {
   compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 import {
     initAttributeVariable,
     initVertexBufferForLaterUse3D,
-} from "./init"
+} from "../../lib/init";
 
 import {
     getNormalOnVertices,
-} from "./cube"
+} from "../../lib/cube";
 
 import {
     Matrix4,
     Vector4
-} from "./cuon-matrix"
+} from "../../lib/cuon-matrix";
 
 const VSHADER_SOURCE = `
     attribute vec4 a_Position;

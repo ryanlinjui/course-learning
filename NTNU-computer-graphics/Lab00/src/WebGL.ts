@@ -1,29 +1,26 @@
 import { 
-    compileShader,
-    createProgram
-} from "../../utils"
+    compileShader
+} from "../../lib/utils";
 
 
 const VSHADER_SOURCE = `
-        attribute vec4 a_Position;
-        void main(){
-            //gl_Position is key variable in GLSL (pass vertex location to fragment shader)
-            gl_Position = a_Position;
-        }    
-    `;
+    attribute vec4 a_Position;
+    void main(){
+        //gl_Position is key variable in GLSL (pass vertex location to fragment shader)
+        gl_Position = a_Position;
+    }    
+`;
 
 const FSHADER_SOURCE = `
-        void main(){
-            //gl_FragColor is key variable in GLSL (assign color of a pixel)
-            gl_FragColor = vec4(0.0/255.0, 28.0/255.0, 245.0/255.0, 1.0);
-        }
-    `;
+    void main(){
+        //gl_FragColor is key variable in GLSL (assign color of a pixel)
+        gl_FragColor = vec4(0.0/255.0, 28.0/255.0, 245.0/255.0, 1.0);
+    }
+`;
 
 main();
-
 function main()
 {
-    console.log("gwewewe");
     ///// Step 1. get the canvas
     const canvas = document.getElementById('webgl') as HTMLCanvasElement | null;
 

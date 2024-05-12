@@ -1,27 +1,27 @@
 import {
     compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 import {
     Interface,
     initAttributeVariable,
     initVertexBufferForLaterUse
-} from "./init"
+} from "../../lib/init";
 
 import {
     Matrix4
-} from "./cuon-matrix"
+} from "../../lib/cuon-matrix";
 
 const VSHADER_SOURCE = `
-        attribute vec4 a_Position;
-        attribute vec4 a_Color;
-        uniform mat4 u_mvpMatrix;
-        varying vec4 v_Color;
-        void main(){
-            gl_Position = u_mvpMatrix * a_Position;
-            v_Color = a_Color;
-        }    
-    `;
+    attribute vec4 a_Position;
+    attribute vec4 a_Color;
+    uniform mat4 u_mvpMatrix;
+    varying vec4 v_Color;
+    void main(){
+        gl_Position = u_mvpMatrix * a_Position;
+        v_Color = a_Color;
+    }    
+`;
 
 const FSHADER_SOURCE = `
     precision mediump float;
@@ -33,7 +33,7 @@ const FSHADER_SOURCE = `
 
 // 9 vertices (three triangles)
 // x, y, z of the 1st vertex of the 1st triangle
-const vertices = new Float32Array([
+const vertices: number[] = [
     0.0, 1.0, -2.0,
     -0.5, -1.0, -2.0,
     0.5, -1.0, -2.0,
@@ -45,11 +45,11 @@ const vertices = new Float32Array([
     0.0, 1.0, 2.0,
     -0.5, -1.0, 2.0,
     0.5, -1.0, 2.0,
-]);
+];
 
 // 9 vertices (three triangles)"s color
 // r, g, b of the 1st vertex of the 1st triangle
-const colors = new Float32Array([
+const colors: number[] = [
     0.7, 0.0, 0.0, 
     0.7, 0.0, 0.0,
     0.7, 0.0, 0.0, 
@@ -61,17 +61,17 @@ const colors = new Float32Array([
     0.0, 0.0, 0.7, 
     0.0, 0.0, 0.7, 
     0.0, 0.0, 0.7, 
-]);
+];
 
-const modelMatrix1 = new Matrix4(null);
-const frontViewMatrix1 = new Matrix4(null);
-const pespProjMatrix1 = new Matrix4(null);
+const modelMatrix1 = new Matrix4();
+const frontViewMatrix1 = new Matrix4();
+const pespProjMatrix1 = new Matrix4();
 
-const modelMatrix2 = new Matrix4(null);
-const frontViewMatrix2 = new Matrix4(null);
-const pespProjMatrix2 = new Matrix4(null);
+const modelMatrix2 = new Matrix4();
+const frontViewMatrix2 = new Matrix4();
+const pespProjMatrix2 = new Matrix4();
 
-const transformMat = new Matrix4(null);
+const transformMat = new Matrix4();
 
 let mouseLastX:number, mouseLastY:number;
 let mouseDragging = false;

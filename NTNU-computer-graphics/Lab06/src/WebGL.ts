@@ -1,14 +1,14 @@
 import {
     compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 import {
     initVertexBuffers
-} from "./init"
+} from "../../lib/init";
 
 import {
     Matrix4
-} from "./cuon-matrix"
+} from "../../lib/cuon-matrix";
 
 const VSHADER_SOURCE = `
     attribute vec4 a_Position;

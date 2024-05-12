@@ -1,24 +1,24 @@
 import {
     compileShader
-} from "../../utils"
+} from "../../lib/utils";
 
 const VSHADER_SOURCE = `
-        attribute vec4 a_Position;
-        void main()
-        {
-            gl_Position = a_Position;
-            gl_PointSize = 5.0;
-        }    
-    `;
+    attribute vec4 a_Position;
+    void main()
+    {
+        gl_Position = a_Position;
+        gl_PointSize = 5.0;
+    }    
+`;
 
 const FSHADER_SOURCE = `
-        precision mediump float;
-        uniform vec4 u_FragColor;
-        void main()
-        {
-            gl_FragColor = u_FragColor;
-        }
-    `;
+    precision mediump float;
+    uniform vec4 u_FragColor;
+    void main()
+    {
+        gl_FragColor = u_FragColor;
+    }
+`;
 
 let shape = 'p'; // default shape is point
 let color = 'r'; // default color is red
