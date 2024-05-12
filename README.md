@@ -44,10 +44,10 @@
  
 - NTNU CSU0034 資料庫理論 Database Theories
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=111&term=2&courseCode=CSU0034&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
+[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/JacobLinCool/Privy-Council)
 
 - NTNU CSU0042 人工智慧 Artificial Intelligence
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-artificial-intelligence)
-[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/JacobLinCool/Privy-Council)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=111&term=2&courseCode=CSU0042&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
 
 ## 111-1 (2022 Fall)
