@@ -5,8 +5,13 @@ import {
 import {
     initAttributeVariable,
     initVertexBufferForLaterUse3D,
-    initCubeTexture
+    initCubeTexture,
+    initFrameBufferForCubemapRendering
 } from "../../lib/init";
+
+import {
+    parseOBJ
+} from "../../lib/cube";
 
 import {
     getNormalOnVertices,
@@ -97,6 +102,43 @@ const FSHADER_QUAD_SOURCE = `
     }
 `;
 
+const VSHADER_SOURCE_TEXTURE_ON_CUBE  = `
+    attribute vec4 a_Position;
+    attribute vec4 a_Normal;
+    uniform mat4 u_MvpMatrix;
+    uniform mat4 u_modelMatrix;
+    uniform mat4 u_normalMatrix;
+    varying vec4 v_TexCoord;
+    varying vec3 v_Normal;
+    varying vec3 v_PositionInWorld;
+    void main() {
+        gl_Position = u_MvpMatrix * a_Position;
+        v_TexCoord = a_Position;
+        v_PositionInWorld = (u_modelMatrix * a_Position).xyz; 
+        v_Normal = normalize(vec3(u_normalMatrix * a_Normal));
+    } 
+`;
+
+const FSHADER_SOURCE_TEXTURE_ON_CUBE = `
+    precision mediump float;
+    varying vec4 v_TexCoord;
+    uniform vec3 u_ViewPosition;
+    uniform vec3 u_Color;
+    uniform samplerCube u_envCubeMap;
+    varying vec3 v_Normal;
+    varying vec3 v_PositionInWorld;
+    void main() 
+    {
+        vec3 V = normalize(u_ViewPosition - v_PositionInWorld); 
+        vec3 normal = normalize(v_Normal);
+        vec3 R = reflect(-V, normal);
+        gl_FragColor = vec4(0.78 * textureCube(u_envCubeMap, R).rgb + 0.3 * u_Color, 1.0);
+    }
+`;
+
+const lightX = 0, lightY = 4, lightZ = -5;
+let lightObj: any[] = [];
+
 let mouseLastX:number, mouseLastY:number;
 let mouseDragging = false;
 let angleX = 0, angleY = 0;
@@ -122,6 +164,18 @@ let u_Kd: WebGLUniformLocation | null;
 let u_Ks: WebGLUniformLocation | null;
 let u_shininess: WebGLUniformLocation | null;
 let u_Color: WebGLUniformLocation | null;
+
+let programTextureOnCube: WebGLProgram;
+let programTextureOnCube_a_Position: number;
+let programTextureOnCube_a_Normal: number;
+let programTextureOnCube_u_MvpMatrix: WebGLUniformLocation | null;
+let programTextureOnCube_u_modelMatrix: WebGLUniformLocation | null;
+let programTextureOnCube_u_normalMatrix: WebGLUniformLocation | null;
+let programTextureOnCube_u_ViewPosition: WebGLUniformLocation | null;
+let programTextureOnCube_u_envCubeMap: WebGLUniformLocation | null;
+let programTextureOnCube_u_Color: WebGLUniformLocation | null;
+
+const offScreenWidth = 256, offScreenHeight = 256; //for cubemap render
 
 // ground 3D model
 let ground: any[] = [];
@@ -158,43 +212,6 @@ const groundVertices: number[] = [
     -1.0, -1.0, -1.0, -1.0, -1.0, 1.0,
     -1.0, -1.0, 1.0, 1.0, -1.0, 1.0
 ];
-
-// wheel 3D circle model
-const wheel_radius = 0.2
-const wheel_thickness = 0.2;
-
-let wheel: any[] = [];
-const wheelVertices: number[] = []
-
-for (let i = 0; i < 360; i++)
-{
-    const angle1 = i * Math.PI / 180;
-    const angle2 = (i + 1) * Math.PI / 180;
-    const x1 = wheel_radius * Math.cos(angle1);
-    const y1 = wheel_radius * Math.sin(angle1);
-    const x2 = wheel_radius * Math.cos(angle2);
-    const y2 = wheel_radius * Math.sin(angle2);
-    
-    wheelVertices.push(0, 0, 0);
-    wheelVertices.push(x1, y1, 0);
-    wheelVertices.push(x2, y2, 0);
-
-    wheelVertices.push(x2, y2, 0);
-    wheelVertices.push(x1, y1, 0);
-    wheelVertices.push(x2, y2, wheel_thickness);
-
-    wheelVertices.push(x2, y2, wheel_thickness);
-    wheelVertices.push(x1, y1, 0);
-    wheelVertices.push(x2, y2, 0);
-
-    wheelVertices.push(x1, y1, 0);
-    wheelVertices.push(x1, y1, wheel_thickness);
-    wheelVertices.push(x2, y2, wheel_thickness);
-
-    wheelVertices.push(x2, y2, wheel_thickness);
-    wheelVertices.push(x1, y1, wheel_thickness);
-    wheelVertices.push(0, 0, wheel_thickness);
-}
 
 // body 3D rectangle model
 const body_length = 2;
@@ -452,6 +469,11 @@ let quad_u_viewDirectionProjectionInverse: WebGLUniformLocation | null;
 
 const cameraDirX = 0, cameraDirY = 0, cameraDirZ = -1;
 
+let wheelObj: any;
+let sphereObj: any;
+
+let fbo: any;
+
 main();
 async function main()
 {
@@ -494,6 +516,10 @@ async function main()
         512
     );
 
+    wheelObj = await loadOBJtoCreateVBO("wheel.obj");
+    lightObj = await loadOBJtoCreateVBO("light.obj");
+    sphereObj = await loadOBJtoCreateVBO("sphere.obj");
+
     program = compileShader(gl, VSHADER_SOURCE, FSHADER_SOURCE);
 
     gl.useProgram(program);
@@ -511,13 +537,21 @@ async function main()
     u_shininess = gl.getUniformLocation(program, "u_shininess");
     u_Color = gl.getUniformLocation(program, "u_Color"); 
 
+    programTextureOnCube = compileShader(gl, VSHADER_SOURCE_TEXTURE_ON_CUBE, FSHADER_SOURCE_TEXTURE_ON_CUBE);
+    programTextureOnCube_a_Position = gl.getAttribLocation(programTextureOnCube, "a_Position"); 
+    programTextureOnCube_a_Normal = gl.getAttribLocation(programTextureOnCube, "a_Normal"); 
+    programTextureOnCube_u_MvpMatrix = gl.getUniformLocation(programTextureOnCube, "u_MvpMatrix"); 
+    programTextureOnCube_u_modelMatrix = gl.getUniformLocation(programTextureOnCube, "u_modelMatrix"); 
+    programTextureOnCube_u_normalMatrix = gl.getUniformLocation(programTextureOnCube, "u_normalMatrix");
+    programTextureOnCube_u_ViewPosition = gl.getUniformLocation(programTextureOnCube, "u_ViewPosition");
+    programTextureOnCube_u_envCubeMap = gl.getUniformLocation(programTextureOnCube, "u_envCubeMap"); 
+    programTextureOnCube_u_Color = gl.getUniformLocation(programTextureOnCube, "u_Color"); 
+    
+    fbo = initFrameBufferForCubemapRendering(gl, offScreenWidth, offScreenHeight);
+
     const groundNormals = getNormalOnVertices(groundVertices);
     const goundObject = initVertexBufferForLaterUse3D(gl, groundVertices, groundNormals, null);
     ground.push(goundObject);
-
-    const wheelNormals = getNormalOnVertices(wheelVertices);
-    const wheelObject = initVertexBufferForLaterUse3D(gl, wheelVertices, wheelNormals, null);
-    wheel.push(wheelObject);
 
     const bodyNormals = getNormalOnVertices(bodyVertices);
     const bodyObject = initVertexBufferForLaterUse3D(gl, bodyVertices, bodyNormals, null);
@@ -735,6 +769,8 @@ function draw()
         throw new Error("Canvas is null");
     }
     
+    renderCubeMap(0, 0, 0);
+
     // set the scene
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0, 0, 0, 1);
@@ -779,12 +815,280 @@ function draw()
     initAttributeVariable(gl, quad_a_Position, quadObj.vertexBuffer);
     gl.drawArrays(gl.TRIANGLES, 0, quadObj.numVertices);
 
+    drawAllObjects();
+    
+    const vpMatrix = new Matrix4();
+    vpMatrix.setPerspective(70, 1, 1, 100);
+    vpMatrix.lookAt(
+        cameraX, cameraY, cameraZ,   
+        cameraX + newViewDir.elements[0], 
+        cameraY + newViewDir.elements[1],
+        cameraZ + newViewDir.elements[2], 
+        0, 1, 0
+    );
+
+    // the sphere
+    const mdlMatrix = new Matrix4();
+    mdlMatrix.setScale(0.5, 0.5, 0.5);
+    drawObjectWithDynamicReflection(
+        sphereObj, mdlMatrix, vpMatrix,
+        0.95, 0.85, 0.4
+    );
+}
+
+// obj: the object components
+// mdlMatrix: the model matrix without mouse rotation
+// colorR, G, B: object color
+function drawOneObject(obj: any[], mdlMatrix: Matrix4, colorR: number, colorG: number, colorB: number)
+{
+    // model Matrix (part of the mvp matrix)
+    modelMatrix.setRotate(angleY, 1, 0, 0);//for mouse rotation
+    modelMatrix.rotate(angleX, 0, 1, 0);//for mouse rotation
+    modelMatrix.multiply(mdlMatrix);
+
+    // mvp: projection * view * model matrix  
+    mvpMatrix.setPerspective(30, 1, 1, 100);
+    mvpMatrix.lookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
+    mvpMatrix.multiply(modelMatrix);
+
+    // normal matrix
+    normalMatrix.setInverseOf(modelMatrix);
+    normalMatrix.transpose();
+
+    if (gl == null)
+    {
+        console.log("Failed to get the rendering context for WebGL");
+        return;
+    }
+
+    gl.uniform3f(u_LightPosition, 0, 5, 3);
+    gl.uniform3f(u_ViewPosition, cameraX, cameraY, cameraZ);
+    gl.uniform1f(u_Ka, 0.2);
+    gl.uniform1f(u_Kd, 0.7);
+    gl.uniform1f(u_Ks, 1.0);
+    gl.uniform1f(u_shininess, 10.0);
+    gl.uniform3f(u_Color, colorR, colorG, colorB);
+
+    gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
+    gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
+    gl.uniformMatrix4fv(u_normalMatrix, false, normalMatrix.elements);
+
+    for( let i = 0; i < obj.length; i++)
+    {
+        initAttributeVariable(gl, a_Position, obj[i].vertexBuffer);
+        initAttributeVariable(gl, a_Normal, obj[i].normalBuffer);
+        gl.drawArrays(gl.TRIANGLES, 0, obj[i].numVertices);
+    }
+}
+
+async function loadOBJtoCreateVBO(objFile: string)
+{
+    const objComponents: any[] = [];
+
+    let response = await fetch(objFile);
+    let text = await response.text();
+    let obj = parseOBJ(text);
+
+    for( let i = 0; i < obj.geometries.length; i++)
+    {
+        if (gl == null) throw new Error("gl is null");
+        
+        let o = initVertexBufferForLaterUse3D(
+            gl, 
+            obj.geometries[i].data.position,
+            obj.geometries[i].data.normal, 
+            obj.geometries[i].data.texcoord
+        );
+        objComponents.push(o);
+    }
+    return objComponents;
+}
+
+function mouseDown(ev: MouseEvent)
+{
+    const x = ev.clientX;
+    const y = ev.clientY;
+
+    if(!(ev.target instanceof HTMLCanvasElement)) 
+    {
+        throw new Error("ev.target is null");
+    }
+
+    const rect = ev.target.getBoundingClientRect();
+
+    if( rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom)
+    {
+        mouseLastX = x;
+        mouseLastY = y;
+        mouseDragging = true;
+    }
+}
+
+function mouseScroll(ev: WheelEvent)
+{
+    ev.preventDefault();
+    
+    view -= ev.deltaY * 0.0005;
+    
+    if (view < 0)
+    {
+        view = 0;
+    }
+
+    draw();
+}
+
+function mouseUp()
+{
+    mouseDragging = false;
+}
+
+function mouseMove(ev: MouseEvent)
+{
+    if (canvas == null)
+    {
+        throw new Error("canvas is null");
+    }
+    const x = ev.clientX;
+    const y = ev.clientY;
+
+    if( mouseDragging )
+    {
+        const factor = 100 / canvas.height;
+        const dx = factor * (x - mouseLastX);
+        const dy = factor * (y - mouseLastY);
+
+        angleX += dx;
+        angleY += dy;
+    }
+    mouseLastX = x;
+    mouseLastY = y;
+
+    draw();
+}
+
+function drawObjectWithDynamicReflection(
+    obj: any, modelMatrix: Matrix4, vpMatrix: Matrix4,
+    colorR: number, colorG: number, colorB: number
+)
+{
+    if (gl == null)
+    {
+        throw new Error("gl is null");
+    }
+
+    gl.useProgram(programTextureOnCube);
+    const mvpMatrix = new Matrix4();
+    const normalMatrix = new Matrix4();
+    mvpMatrix.set(vpMatrix);
+    mvpMatrix.multiply(modelMatrix);
+
+    // normal matrix
+    normalMatrix.setInverseOf(modelMatrix);
+    normalMatrix.transpose();
+
+    gl.uniform3f(
+        programTextureOnCube_u_ViewPosition,
+        cameraX, cameraY, cameraZ
+    );
+    gl.uniform3f(programTextureOnCube_u_Color, colorR, colorG, colorB);
+
+    gl.uniformMatrix4fv(programTextureOnCube_u_MvpMatrix, false, mvpMatrix.elements);
+    gl.uniformMatrix4fv(programTextureOnCube_u_modelMatrix, false, modelMatrix.elements);
+    gl.uniformMatrix4fv(programTextureOnCube_u_normalMatrix, false, normalMatrix.elements);
+
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_CUBE_MAP, fbo.texture);
+    gl.uniform1i(programTextureOnCube_u_envCubeMap, 0);
+
+    for (let i = 0; i < obj.length; i++)
+    {
+        initAttributeVariable(gl, programTextureOnCube_a_Position, obj[i].vertexBuffer);
+        initAttributeVariable(gl, programTextureOnCube_a_Normal, obj[i].normalBuffer);
+        gl.drawArrays(gl.TRIANGLES, 0, obj[i].numVertices);
+    }
+}
+
+function renderCubeMap(camX:number, camY:number, camZ:number)
+{
+    if (gl == null)
+    {
+        throw new Error("gl is null");
+    }
+
+    // camera 6 direction to render 6 cubemap faces
+    const ENV_CUBE_LOOK_DIR = [
+        [1.0, 0.0, 0.0],
+        [-1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, -1.0, 0.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, -1.0]
+    ];
+
+    // camera 6 look up vector to render 6 cubemap faces
+    const ENV_CUBE_LOOK_UP = [
+        [0.0, -1.0, 0.0],
+        [0.0, -1.0, 0.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 0.0, -1.0],
+        [0.0, -1.0, 0.0],
+        [0.0, -1.0, 0.0]
+    ];
+
+    gl.useProgram(program);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.viewport(0, 0, offScreenWidth, offScreenHeight);
+    gl.clearColor(0.4, 0.4, 0.4, 1);
+    
+    for (var side = 0; side < 6;side++)
+    {
+        gl.framebufferTexture2D(
+            gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, 
+            gl.TEXTURE_CUBE_MAP_POSITIVE_X + side, fbo.texture, 0
+        );
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        let vpMatrix = new Matrix4();
+        vpMatrix.setPerspective(90, 1, 1, 100);
+        vpMatrix.lookAt(
+            camX, camY, camZ,   
+            camX + ENV_CUBE_LOOK_DIR[side][0], 
+            camY + ENV_CUBE_LOOK_DIR[side][1],
+            camZ + ENV_CUBE_LOOK_DIR[side][2], 
+            ENV_CUBE_LOOK_UP[side][0],
+            ENV_CUBE_LOOK_UP[side][1],
+            ENV_CUBE_LOOK_UP[side][2]
+        );
+        
+        drawEnvMap(vpMatrix);
+        drawAllObjects();
+    }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+}
+
+function drawAllObjects()
+{
+    if (gl == null)
+    {
+        throw new Error("gl is null");
+    }   
 
     // draw the 3D objects
     gl.useProgram(program);
-    
-    // draw ground with red color
     const transformMat = new Matrix4();
+
+    // draw light with white color
+    transformMat.setIdentity();
+    transformMat.translate(lightX, lightY, lightZ);
+    transformMat.scale(0.1, 0.1, 0.1);
+    drawOneObject(
+        lightObj,
+        transformMat,
+        1.0, 1.0, 1.0
+    );
+
+    // draw ground with red color
     transformMat.setIdentity();
     transformMat.scale(4 * view, 0.1 * view, 4 * view);
     transformMat.translate(0, init_sight * 10, 0);
@@ -795,21 +1099,33 @@ function draw()
     );
 
     // draw wheel1 with green color
+    const wheelObj_scale = 0.007;
+
     transformMat.setIdentity();
-    transformMat.scale(view, view, view);
-    transformMat.translate(-0.5 + x_move, 0.3 + y_move + init_sight, z_move);
+    transformMat.scale(view * wheelObj_scale, view * wheelObj_scale, view * wheelObj_scale);
+    transformMat.translate(
+        (-0.5 + x_move) * (1 / wheelObj_scale),
+        (0.3 + y_move + init_sight) * (1 / wheelObj_scale),
+        z_move * (1 / wheelObj_scale)
+    );
+    transformMat.rotate(90, 0, 1, 0);
     drawOneObject(
-        wheel,
+        wheelObj,
         transformMat,
         0.4, 1.0, 0.4
     );
 
     // draw wheel2 with green color
     transformMat.setIdentity();
-    transformMat.scale(view, view, view);
-    transformMat.translate(0.5 + x_move, 0.3 + y_move + init_sight, z_move);
+    transformMat.scale(view * wheelObj_scale, view * wheelObj_scale, view * wheelObj_scale);
+    transformMat.translate(
+        (0.5 + x_move) * (1 / wheelObj_scale),
+        (0.3 + y_move + init_sight) * (1 / wheelObj_scale),
+        z_move * (1 / wheelObj_scale)
+    );
+    transformMat.rotate(90, 0, 1, 0);
     drawOneObject(
-        wheel,
+        wheelObj,
         transformMat,
         0.4, 1.0, 0.4
     );
@@ -967,110 +1283,28 @@ function draw()
     );
 }
 
-// obj: the object components
-// mdlMatrix: the model matrix without mouse rotation
-// colorR, G, B: object color
-function drawOneObject(obj: any[], mdlMatrix: Matrix4, colorR: number, colorG: number, colorB: number)
+function drawEnvMap(viewMatrix: Matrix4)
 {
-    // model Matrix (part of the mvp matrix)
-    modelMatrix.setRotate(angleY, 1, 0, 0);//for mouse rotation
-    modelMatrix.rotate(angleX, 0, 1, 0);//for mouse rotation
-    modelMatrix.multiply(mdlMatrix);
-
-    // mvp: projection * view * model matrix  
-    mvpMatrix.setPerspective(30, 1, 1, 100);
-    mvpMatrix.lookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
-    mvpMatrix.multiply(modelMatrix);
-
-    // normal matrix
-    normalMatrix.setInverseOf(modelMatrix);
-    normalMatrix.transpose();
-
     if (gl == null)
     {
-        console.log("Failed to get the rendering context for WebGL");
-        return;
+        throw new Error("gl is null");
     }
 
-    gl.uniform3f(u_LightPosition, 0, 5, 3);
-    gl.uniform3f(u_ViewPosition, cameraX, cameraY, cameraZ);
-    gl.uniform1f(u_Ka, 0.2);
-    gl.uniform1f(u_Kd, 0.7);
-    gl.uniform1f(u_Ks, 1.0);
-    gl.uniform1f(u_shininess, 10.0);
-    gl.uniform3f(u_Color, colorR, colorG, colorB);
+    const vpFromCamera = new Matrix4();
+    vpFromCamera.multiply(viewMatrix);
+    const vpFromCameraInverse = vpFromCamera.invert();
 
-    gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
-    gl.uniformMatrix4fv(u_modelMatrix, false, modelMatrix.elements);
-    gl.uniformMatrix4fv(u_normalMatrix, false, normalMatrix.elements);
-
-    for( let i = 0; i < obj.length; i++)
-    {
-        initAttributeVariable(gl, a_Position, obj[i].vertexBuffer);
-        initAttributeVariable(gl, a_Normal, obj[i].normalBuffer);
-        gl.drawArrays(gl.TRIANGLES, 0, obj[i].numVertices);
-    }
-}
-
-function mouseDown(ev: MouseEvent)
-{
-    const x = ev.clientX;
-    const y = ev.clientY;
-
-    if(!(ev.target instanceof HTMLCanvasElement)) 
-    {
-        throw new Error("ev.target is null");
-    }
-
-    const rect = ev.target.getBoundingClientRect();
-
-    if( rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom)
-    {
-        mouseLastX = x;
-        mouseLastY = y;
-        mouseDragging = true;
-    }
-}
-
-function mouseScroll(ev: WheelEvent)
-{
-    ev.preventDefault();
-    
-    view -= ev.deltaY * 0.0005;
-    
-    if (view < 0)
-    {
-        view = 0;
-    }
-
-    draw();
-}
-
-function mouseUp()
-{
-    mouseDragging = false;
-}
-
-function mouseMove(ev: MouseEvent)
-{
-    if (canvas == null)
-    {
-        throw new Error("canvas is null");
-    }
-    const x = ev.clientX;
-    const y = ev.clientY;
-
-    if( mouseDragging )
-    {
-        const factor = 100 / canvas.height;
-        const dx = factor * (x - mouseLastX);
-        const dy = factor * (y - mouseLastY);
-
-        angleX += dx;
-        angleY += dy;
-    }
-    mouseLastX = x;
-    mouseLastY = y;
-
-    draw();
+    // quad
+    gl.useProgram(quadProgram);
+    gl.depthFunc(gl.LEQUAL);
+    gl.uniformMatrix4fv(
+        quad_u_viewDirectionProjectionInverse,
+        false,
+        vpFromCameraInverse.elements
+    );
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_CUBE_MAP, cubeMapTex);
+    gl.uniform1i(quad_u_envCubeMap, 0);
+    initAttributeVariable(gl, quad_a_Position, quadObj.vertexBuffer);
+    gl.drawArrays(gl.TRIANGLES, 0, quadObj.numVertices);
 }
