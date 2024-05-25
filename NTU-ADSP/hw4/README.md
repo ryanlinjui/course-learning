@@ -95,23 +95,17 @@ $$
 
 - 當 $\theta = \frac{\pi}{4}$ 或 $\theta = \frac{5\pi}{4}$ 時， $\cos(\theta) = \sin(\theta) = \frac{1}{\sqrt{2}}$ 或 $-\frac{1}{\sqrt{2}}$ 。此時可以重組為:
    
-   $$
-   \begin{align*}
-   c &= a \cos(\theta) - b \sin(\theta) = \frac{a - b}{\sqrt{2}}, \\
-   d &= b \cos(\theta) + a \sin(\theta) = \frac{b + a}{\sqrt{2}}.
-   \end{align*}
-   $$
+   $$c = a \cos(\theta) - b \sin(\theta) = \frac{a - b}{\sqrt{2}}$$
+  
+   $$d = b \cos(\theta) + a \sin(\theta) = \frac{b + a}{\sqrt{2}}$$
    
    得出需要計算 $a-b$ 和 $a+b$ 兩個實數乘法，再乘以 $\frac{1}{\sqrt{2}}$ 。
 
 - 當 $\theta = \frac{3\pi}{4}$ 或 $\theta = \frac{7\pi}{4}$ 時， $\cos(\theta) = -\sin(\theta) = -\frac{1}{\sqrt{2}}$ 或 $\frac{1}{\sqrt{2}}$ 。此時可以重組為:
    
-   $$
-   \begin{align*}
-   c &= a \cos(\theta) - b \sin(\theta) = \frac{a + b}{\sqrt{2}}, \\
-   d &= b \cos(\theta) + a \sin(\theta) = \frac{-a + b}{\sqrt{2}}.
-   \end{align*}
-   $$
+   $$c = a \cos(\theta) - b \sin(\theta) = \frac{a + b}{\sqrt{2}}$$
+
+   $$d = b \cos(\theta) + a \sin(\theta) = \frac{-a + b}{\sqrt{2}}$$
    
    得出只需要計算 $a+b$ 和 $-a+b$ 兩個實數乘法。
 
@@ -188,6 +182,7 @@ $$
 分別計算兩個子矩陣與相應部分的乘積:
 
 - 計算 $A$ 與 $x[1]$ 和 $x[4]$ 的乘積 (Case 3, MUL2):
+
 $$
 \begin{bmatrix}
 a & b \\
@@ -196,13 +191,11 @@ b & a
 \begin{bmatrix}
 x[1] \\
 x[4]
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 a \cdot x[1] + b \cdot x[4] \\
 b \cdot x[1] + a \cdot x[4]
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 y_1 \\
 y_2
@@ -210,6 +203,7 @@ y_2
 $$
 
 - 計算 $B$ 與 $x[2]$ 和 $x[3]$ 的乘積 (Case 3, MUL2):
+
 $$
 \begin{bmatrix}
 b & a \\
@@ -218,13 +212,11 @@ b & a \\
 \begin{bmatrix}
 x[2] \\
 x[3]
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 b \cdot x[2] + a \cdot x[3] \\
 -a \cdot x[2] - b \cdot x[3]
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 y_3 \\
 y_4
