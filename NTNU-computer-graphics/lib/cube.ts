@@ -1,3 +1,7 @@
+import {
+    initVertexBufferForLaterUse3D
+} from "./init";
+
 // normal vector calculation (for the cube)
 export function getNormalOnVertices(vertices: number[])
 {
@@ -206,4 +210,28 @@ export function parseOBJ(text: string)
         geometries,
         materialLibs,
     };
+}
+
+export async function loadOBJtoCreateVBO(
+    gl: WebGL2RenderingContext,
+    objFile: string
+)
+{
+    const objComponents: any[] = [];
+
+    let response = await fetch(objFile);
+    let text = await response.text();
+    let obj = parseOBJ(text);
+
+    for( let i = 0; i < obj.geometries.length; i++)
+    {        
+        let o = initVertexBufferForLaterUse3D(
+            gl, 
+            obj.geometries[i].data.position,
+            obj.geometries[i].data.normal, 
+            obj.geometries[i].data.texcoord
+        );
+        objComponents.push(o);
+    }
+    return objComponents;
 }
