@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 112-2 NTNU Computer Graphic Final Project</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffcc33, #ff6699, #6699ff, #33cc99);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #333;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        #container {
+            text-align: center;
+            background-color: #ffffffcc;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        canvas {
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            width: 75%;
+            height: calc(100% - 40px);
+        }
+        h1 {
+            margin-top: 0px;
+            font-size: 36px;
+            color: #0056b3;
+        }
+        button {
+            padding: 10px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Taiwan Claw Machine Simulator</h1>
+        <button onclick="show_introduction()">Introduction</button>
+        <canvas id="webgl" width="1920" height="1080">
+            Please use a browser that supports "canvas"
+        </canvas>
+    </div>
+    <script src="./src/WebGL.ts" type="module"></script>
+    <script>
+        function show_introduction()
+        {
+            alert(" \
+                Instruction: \n\n \
+                - When Walking Around (Third Person View): \n \
+                    1. 'W(w), A(a), S(s), D(d)' to move the apple.\n \
+                    2. Use Mouse to control the camera.\n \
+                    3. Look for claw machine and 'E(e)' to enter.\n \
+                    4. Maybe you can call the bomb by pressing......?\n\n \
+                - When Playing Claw Machine (First Person View): \n \
+                    1. Insert Coin by pressing 'C(c)'.\n \
+                    2. Use 'Arrow Key' to move the claw.\n \
+                    3. Press 'Space Key' to grab the item.\n \
+                    4. Grab Time !! \n \
+                    5. Press 'Q(q)' to exit the claw machine. \
+            ");
+        }
+    </script>
+</body>
+</html>
