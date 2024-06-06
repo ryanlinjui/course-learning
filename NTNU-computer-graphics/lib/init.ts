@@ -4,7 +4,11 @@
 export function initAttributeVariable(gl:WebGL2RenderingContext, a_attribute, buffer)
 {
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.vertexAttribPointer(a_attribute, buffer.num, buffer.type, false, 0, 0);
+    if (buffer != null)
+    {
+        gl.vertexAttribPointer(a_attribute, buffer.num, buffer.type, false, 0, 0);
+    }
+    
     gl.enableVertexAttribArray(a_attribute);
 }
 
