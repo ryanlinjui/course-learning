@@ -17,6 +17,10 @@
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://nol.ntu.edu.tw/nol/coursesearch/print_table.php?course_id=921%20U1930&class=&dpt_code=9210&ser_no=60849&semester=112-2&%20lang=CH)
 [![Website](https://img.shields.io/badge/Website-black?style=plastic&logo=html5&logoColor=ffffff)](http://djj.ee.ntu.edu.tw/ADSP.htm)
 
+- NTNU CSC0005 物件導向分析與設計 Object-Oriented Analysis and Design
+[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/KennethOng02/PetCoin)
+[![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=112&term=2&courseCode=CSC0005&courseGroup=&deptCode=SU47&formS=&classes1=9&deptGroup=)
+
 - NTNU CSU0021 計算機圖學 Computer Graphics
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-computer-graphics)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=112&term=2&courseCode=CSU0021&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
