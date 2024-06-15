@@ -37,16 +37,18 @@
 ##### (a) (page 466, 470, 472) ([0605-2-09:49](https://cool.ntu.edu.tw/courses/34012/modules/items/1558446))
 
 - Number of entries equal to 1:
-k=2 -> 3
-k=4 -> 10
-k=8 -> 36
+
+    k=2 -> 3  
+    k=4 -> 10  
+    k=8 -> 36  
 
 $$\frac{k(k+1)}{2}$$
 
 - Number of entries equal to -1:
-k=2 -> 1
-k=4 -> 6
-k=8 -> 28
+
+    k=2 -> 1  
+    k=4 -> 6  
+    k=8 -> 28  
 
 $$\frac{k(k-1)}{2}$$
 
@@ -54,12 +56,12 @@ $$\frac{k(k-1)}{2}$$
 
 - Number of entries equal to 1:
     
-    > By [Recurrence Equation Solution Webpage](https://www.wolframalpha.com/input?i=T%5Bn%5D%3D%3D2*T%5Bn%2F2%5D%2Bn%2F2)
+    > By [Recurrence Equation Solution Webpage](https://www.wolframalpha.com/input?i=T%5Bn%5D%3D%3D2*T%5Bn%2F2%5D%2Bn%2F2)  
 
-    k=2 -> 3
-    k=4 -> 8
-    k=8 -> 20
-    k=16 -> 48
+    k=2 -> 3  
+    k=4 -> 8  
+    k=8 -> 20  
+    k=16 -> 48  
 
     $$T(k) = 2 \times T\left(\frac{k}{2}\right) + \frac{k}{2}$$
 
@@ -67,20 +69,20 @@ $$\frac{k(k-1)}{2}$$
 
 - Number of entries equal to -1:
     
-    k=2 -> 1
-    k=4 -> 4
-    k=8 -> 12
-    k=16 -> 32
+    k=2 -> 1  
+    k=4 -> 4  
+    k=8 -> 12  
+    k=16 -> 32  
 
     $$k(\log_4{k})$$
 
 - Number of entries equal to 0:
-    > Calculate by subtracting the number of entries equal to 1 and -1 from the total number of entries.
+    > Calculate by subtracting the number of entries equal to 1 and -1 from the total number of entries.  
 
-    k=2 -> 0
-    k=4 -> 4
-    k=8 -> 32
-    k=16 -> 176
+    k=2 -> 0  
+    k=4 -> 4  
+    k=8 -> 32  
+    k=16 -> 176  
 
 $$k^2 - (k + \frac{k}{2} \log_2{k}) - k(\log_4{k})$$
 
@@ -172,35 +174,35 @@ $$y_3 = [1, -1, 1, -1, 3, 1, 3, 1, -1, 1, -1, 1, 1, 3, 1, 3]$$
 
 使用 Inner Product 來 recover 原始資料:
 
-$$<x, y> = \sum x_i \cdot y_i$$
+$$\langle x, y \rangle = \sum x_i \cdot y_i$$
 
 Recovers 第一個 Original data:
 
-$$\frac{<y_1,1^{st}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_1,1^{st} \rangle}{16} = \frac{16}{16}  > 0 \Rightarrow 1$$
 
-$$\frac{<y_2,1^{st}>}{16} = \frac{-16}{16} < 0 \Rightarrow -1$$
+$$\frac{\langle y_2,1^{st} \rangle}{16} = \frac{-16}{16} < 0 \Rightarrow -1$$
 
-$$\frac{<y_3,1^{st}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_3,1^{st} \rangle}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
 
 $$[1, -1, 1] \Rightarrow [1, 0, 1]$$
 
 Recovers 第二個 Original data:
 
-$$\frac{<y_1,4^{th}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_1,4^{th} \rangle}{16} = \frac{16}{16}  > 0 \Rightarrow 1$$
 
-$$\frac{<y_2,4^{th}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_2,4^{th} \rangle}{16} = \frac{16}{16}  > 0 \Rightarrow 1$$
 
-$$\frac{<y_3,4^{th}>}{16} = \frac{-16}{16} < 0 \Rightarrow -1$$
+$$\frac{\langle y_3,4^{th} \rangle}{16} = \frac{-16}{16} < 0 \Rightarrow -1$$
 
 $$[1, 1, -1] \Rightarrow [1, 1, 0]$$
 
 Recovers 第三個 Original data:
 
-$$\frac{<y_1,10^{th}>}{16}= \frac{-16}{16} < 0 \Rightarrow -1$$
+$$\frac{\langle y_1,10^{th} \rangle}{16}= \frac{-16}{16} < 0 \Rightarrow -1$$
 
-$$\frac{<y_2,10^{th}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_2,10^{th} \rangle}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
 
-$$\frac{<y_3,10^{th}>}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
+$$\frac{\langle y_3,10^{th} \rangle}{16} = \frac{16}{16} > 0 \Rightarrow 1$$
 
 $$[-1, 1, 1] \Rightarrow [0, 1, 1]$$
 
