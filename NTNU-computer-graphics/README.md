@@ -1,1 +1,0 @@
-# NTNU computer graphics

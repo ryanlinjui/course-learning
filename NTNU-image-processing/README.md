@@ -1,1 +1,0 @@
-# NTNU-image-processing
