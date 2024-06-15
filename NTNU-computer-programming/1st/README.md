@@ -1,6 +1,6 @@
 ## Computer Programming I
 
-[Website](https://sites.google.com/gapps.ntnu.edu.tw/neokent/teaching/2021fall-computer-programming-i?authuser=0)
+[Website](https://sites.google.com/gapps.ntnu.edu.tw/neokent/teaching/past-courses/2021fall-computer-programming-i?authuser=0)
 
 ---
 
