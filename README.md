@@ -24,6 +24,7 @@
 
 - NTNU CSU0021 計算機圖學 Computer Graphics
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-computer-graphics)
+[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](./NTNU-computer-graphics/FinalProject)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=112&term=2&courseCode=CSU0021&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
 
 - NTNU CSU0041 影像處理 Image Processing
