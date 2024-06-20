@@ -14,6 +14,7 @@
 
 - NTU EE5163 高等數位訊號處理 Advanced Digital Signal Processing
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTU-ADSP)
+[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/ryanlinjui/AudioFlex)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://nol.ntu.edu.tw/nol/coursesearch/print_table.php?course_id=921%20U1930&class=&dpt_code=9210&ser_no=60849&semester=112-2&%20lang=CH)
 [![Website](https://img.shields.io/badge/Website-black?style=plastic&logo=html5&logoColor=ffffff)](http://djj.ee.ntu.edu.tw/ADSP.htm)
 
