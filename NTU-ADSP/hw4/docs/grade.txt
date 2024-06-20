@@ -1,0 +1,6 @@
+2.(a) entropy=7.2146
+3.one more: x=n*pi/6 n is an integer that x%3!=0
+5. 6 real multiplications
+6. (c) 1328
+7. alpha=3;(b)multiply matrix with coefficient and take remainder
+bonus [+1]
