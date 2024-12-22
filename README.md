@@ -18,6 +18,10 @@
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-XML)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=113&term=1&courseCode=CSC0006&courseGroup=&deptCode=SU47&formS=&classes1=9&deptGroup=)
 
+- NTNU CSU0028 軟體工程 (Software Engineering)
+[![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/hinagiku-dev/Hinagiku)
+[![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=113&term=1&courseCode=CSU0028&courseGroup=&deptCode=SU47&formS=3&classes1=&deptGroup=)
+
 - NTNU CSU0049 類比數位運算元件 (Analog and Digital Computing Elements)
 [![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-analog-digital-computing-elements)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=113&term=1&courseCode=CSU0049&courseGroup=&deptCode=SU47&formS=&classes1=&deptGroup=)
