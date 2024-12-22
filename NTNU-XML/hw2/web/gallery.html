@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Gallery</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="resume.html">Resume</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Image Gallery</h2>
+        <figure>
+            <img src="images/photo1.jpg" alt="A serene beach sunset" />
+            <figcaption>A serene beach sunset</figcaption>
+        </figure>
+        <figure>
+            <img src="images/photo2.jpg" alt="A blooming sunflower under the clear sky" />
+            <figcaption>A blooming sunflower under the clear sky</figcaption>
+        </figure>
+        <p>For more photos, visit our <a href="https://www.unsplash.com" target="_blank">Unsplash Gallery</a>.</p>
+
+        <h2>Video</h2>
+        <video controls width="100%">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support video playback.
+        </video>
+
+        <h2>Scalar Graphics</h2>
+        <canvas id="artCanvas" width="400" height="200" style="border: 1px solid #000;"></canvas>
+
+        <h2>Feedback Form</h2>
+        <form action="submit_feedback.php" method="post">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required><br>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
+
+            <label for="feedback">Your Feedback:</label><br>
+            <textarea id="feedback" name="feedback" placeholder="Write your feedback here" rows="4" cols="50" required></textarea><br>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 RyanLin NTNU 41047035S</p>
+    </footer>
+
+    <script>
+        // Draw a simple graphic on the canvas
+        const canvas = document.getElementById('artCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw a rectangle
+        ctx.fillStyle = 'lightblue';
+        ctx.fillRect(50, 50, 150, 100);
+
+        // Draw a circle
+        ctx.beginPath();
+        ctx.arc(300, 100, 50, 0, Math.PI * 2, true);
+        ctx.fillStyle = 'orange';
+        ctx.fill();
+
+        // Draw some text
+        ctx.font = '20px Arial';
+        ctx.fillStyle = 'black';
+        ctx.fillText('Canvas Art', 120, 30);
+    </script>
+</body>
+</html>

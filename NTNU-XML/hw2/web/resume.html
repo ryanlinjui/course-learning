@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Resume</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="resume.html">Resume</a>
+        </nav>
+    </header>
+    <main>
+        <h2>My Resume</h2>
+        <div id="resume-container">
+            <!-- The XML content will be loaded here dynamically -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 RyanLin NTNU 41047035S</p>
+    </footer>
+
+    <script>
+        // Fetch and display XML content
+        fetch('resume.xml')
+            .then(response => response.text())
+            .then(xmlText => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+                
+                // Extract personal details
+                const name = xmlDoc.querySelector('name').textContent;
+                const email = xmlDoc.querySelector('email').textContent;
+                const phone = xmlDoc.querySelector('phone').textContent;
+                const address = xmlDoc.querySelector('address');
+                const street = address.querySelector('street').textContent;
+                const city = address.querySelector('city').textContent;
+                const state = address.querySelector('state').textContent;
+                const zipCode = address.querySelector('zipCode').textContent;
+
+                // Extract education
+                const degrees = Array.from(xmlDoc.querySelectorAll('degree')).map(degree => {
+                    const title = degree.querySelector('title').textContent;
+                    const institution = degree.querySelector('institution').textContent;
+                    const year = degree.querySelector('yearGraduated').textContent;
+                    return `<li>${title} from ${institution} (${year})</li>`;
+                });
+
+                // Extract work experience
+                const jobs = Array.from(xmlDoc.querySelectorAll('job')).map(job => {
+                    const title = job.querySelector('title').textContent;
+                    const company = job.querySelector('company').textContent;
+                    const startDate = job.querySelector('startDate').textContent;
+                    const endDate = job.querySelector('endDate').textContent;
+                    const responsibilities = Array.from(job.querySelectorAll('responsibility'))
+                        .map(r => `<li>${r.textContent}</li>`)
+                        .join('');
+                    return `
+                        <li>
+                            <strong>${title}</strong> at ${company} (${startDate} - ${endDate})
+                            <ul>${responsibilities}</ul>
+                        </li>`;
+                });
+
+                // Extract skills
+                const skills = Array.from(xmlDoc.querySelectorAll('skill')).map(skill => `<li>${skill.textContent}</li>`);
+
+                // Build and insert HTML content
+                const container = document.getElementById('resume-container');
+                container.innerHTML = `
+                    <h3>Personal Details</h3>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Address:</strong> ${street}, ${city}, ${state}, ${zipCode}</p>
+                    <h3>Education</h3>
+                    <ul>${degrees.join('')}</ul>
+                    <h3>Work Experience</h3>
+                    <ul>${jobs.join('')}</ul>
+                    <h3>Skills</h3>
+                    <ul>${skills.join('')}</ul>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('resume-container').innerHTML = '<p>Error loading resume data.</p>';
+                console.error('Error loading resume XML:', error);
+            });
+    </script>
+</body>
+</html>

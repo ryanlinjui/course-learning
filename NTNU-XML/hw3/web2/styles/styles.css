@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+pre {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    white-space: pre-wrap;
+}
+
+iframe {
+    border: 1px solid #ddd;
+}

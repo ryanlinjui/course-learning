@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員與書籍管理</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <h1>會員與書籍管理</h1>
+    <nav>
+        <a href="index.html">回到 XML Viewer 頁面</a>
+    </nav>
+
+    <!-- 上傳 XML 文件 -->
+    <div id="upload-section">
+        <h2>上傳 XML 文件</h2>
+        <label for="xml-file">選擇 XML 文件：</label>
+        <input type="file" id="xml-file" accept=".xml">
+        <button id="load-xml">加載 XML</button>
+    </div>
+
+    <!-- 會員管理 -->
+    <h2>會員管理</h2>
+    <form id="member-form">
+        <label for="member-id">會員 ID：</label>
+        <input type="text" id="member-id" required>
+        <label for="member-name">會員名稱：</label>
+        <input type="text" id="member-name" required>
+        <button type="button" id="add-member">新增會員</button>
+        <button type="button" id="update-member">修改會員</button>
+        <button type="button" id="delete-member">刪除會員</button>
+        <button type="button" id="search-member">查詢會員</button>
+    </form>
+    <h2>會員列表</h2>
+    <ul id="member-list"></ul>
+
+    <!-- 書籍管理 -->
+    <h2>書籍管理</h2>
+    <form id="book-form">
+        <label for="book-id">書籍 ID：</label>
+        <input type="text" id="book-id" required>
+        <label for="book-title">書籍標題：</label>
+        <input type="text" id="book-title" required>
+        <label for="book-author">作者：</label>
+        <input type="text" id="book-author" required>
+        <label for="book-price">價格：</label>
+        <input type="number" id="book-price" required>
+        <button type="button" id="add-book">新增書籍</button>
+        <button type="button" id="update-book">修改書籍</button>
+        <button type="button" id="delete-book">刪除書籍</button>
+        <button type="button" id="search-book">查詢書籍</button>
+    </form>
+    <h2>書籍列表</h2>
+    <ul id="book-list"></ul>
+
+    <!-- 下載 XML 文件 -->
+    <button id="download-xml">下載 XML</button>
+    <script src="scripts/member.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+    <members>
+        <member id="001">
+            <name>王小明</name>
+        </member>
+        <member id="002">
+            <name>李小花</name>
+        </member>
+    </members>
+    <books>
+        <book id="101">
+            <title>XML 入門</title>
+            <author>王小華</author>
+            <price>500</price>
+        </book>
+        <book id="102">
+            <title>Java 基礎</title>
+            <author>李小明</author>
+            <price>400</price>
+        </book>
+    </books>
+</data>

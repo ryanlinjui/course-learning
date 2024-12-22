@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resume>
+    <personalDetails>
+        <name>RyanLin</name>
+        <email>RyanLin@example.com</email>
+        <phone>+123-456-7890</phone>
+        <address>
+            <street>123 Main Street</street>
+            <city>Sample City</city>
+            <state>Sample State</state>
+            <zipCode>12345</zipCode>
+        </address>
+    </personalDetails>
+    <education>
+        <degree>
+            <title>Bachelor of Science in Computer Science</title>
+            <institution>Sample University</institution>
+            <yearGraduated>2020</yearGraduated>
+        </degree>
+        <degree>
+            <title>Master of Science in Data Science</title>
+            <institution>Sample University</institution>
+            <yearGraduated>2022</yearGraduated>
+        </degree>
+    </education>
+    <workExperience>
+        <job>
+            <title>Software Engineer</title>
+            <company>Tech Solutions Inc.</company>
+            <startDate>2022-03-01</startDate>
+            <endDate>Present</endDate>
+            <responsibilities>
+                <responsibility>Developed web applications using HTML5, CSS, and JavaScript.</responsibility>
+                <responsibility>Optimized database queries for better performance.</responsibility>
+            </responsibilities>
+        </job>
+        <job>
+            <title>Intern</title>
+            <company>Innovate Labs</company>
+            <startDate>2021-06-01</startDate>
+            <endDate>2021-08-30</endDate>
+            <responsibilities>
+                <responsibility>Assisted in developing machine learning models.</responsibility>
+                <responsibility>Prepared data pipelines for ETL processes.</responsibility>
+            </responsibilities>
+        </job>
+    </workExperience>
+    <skills>
+        <skill>HTML5</skill>
+        <skill>CSS3</skill>
+        <skill>JavaScript</skill>
+        <skill>Python</skill>
+        <skill>Data Analysis</skill>
+    </skills>
+</resume>
