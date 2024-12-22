@@ -1,3 +1,5 @@
+> If you wanna **ask anything or spot anything wrong with my assignments (e.g., code or content)**, feel free to go the [GitHub Issues](https://github.com/ryanlinjui/course-learning/issues) to discuss!
+
 # Course Learning
 
 <p align="left">
