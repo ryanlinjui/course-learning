@@ -35,6 +35,7 @@
 [![Website](https://img.shields.io/badge/Website-black?style=plastic&logo=html5&logoColor=ffffff)](http://djj.ee.ntu.edu.tw/ADSP.htm)
 
 - NTNU CSC0005 物件導向分析與設計 (Object-Oriented Analysis and Design)
+[![Assignment](https://img.shields.io/badge/Assignment-black?style=plastic&logo=github&logoColor=ffffff)](./NTNU-OOAD)
 [![Project](https://img.shields.io/badge/Project-black?style=plastic&logo=gurobi&logoColor=ffffff)](https://github.com/KennethOng02/PetCoin)
 [![Syllabus](https://img.shields.io/badge/Syllabus-black?style=plastic&logo=alwaysdata&logoColor=ffffff)](https://courseap2.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=112&term=2&courseCode=CSC0005&courseGroup=&deptCode=SU47&formS=&classes1=9&deptGroup=)
 
